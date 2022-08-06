@@ -5,12 +5,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My new post - 睡醒了去摸鱼</title>
+    <title>hexo修改主题 - 睡醒了去摸鱼</title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="google" content="notranslate" />
     <meta name="keywords" content="Fechin,"> 
-    
+    <meta name="description" content="下载主题
+找到主题的下载链接,例如：https://github.com/Fechin/hexo-theme-diaspora.git themes&amp;#x2F;diaspora，然后在gitbash,"> 
     <meta name="author" content="oekf"> 
     <link rel="alternative" href="atom.xml" title="睡醒了去摸鱼" type="application/atom+xml"> 
     <link rel="icon" href="/img/favicon.png"> 
@@ -18,16 +19,18 @@
     
     
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:title" content="My new post - 睡醒了去摸鱼"/>
-    
+    <meta name="twitter:title" content="hexo修改主题 - 睡醒了去摸鱼"/>
+    <meta name="twitter:description" content="下载主题
+找到主题的下载链接,例如：https://github.com/Fechin/hexo-theme-diaspora.git themes&amp;#x2F;diaspora，然后在gitbash,"/>
     
     
     
     
     <meta property="og:site_name" content="睡醒了去摸鱼"/>
     <meta property="og:type" content="object"/>
-    <meta property="og:title" content="My new post - 睡醒了去摸鱼"/>
-    
+    <meta property="og:title" content="hexo修改主题 - 睡醒了去摸鱼"/>
+    <meta property="og:description" content="下载主题
+找到主题的下载链接,例如：https://github.com/Fechin/hexo-theme-diaspora.git themes&amp;#x2F;diaspora，然后在gitbash,"/>
     
 <link rel="stylesheet" href="/css/diaspora.css">
 
@@ -45,7 +48,7 @@
     <div class="bar" style="width: 0;"></div>
     <a class="iconfont icon-home image-icon" href="javascript:;" data-url="http://oekf.github.io"></a>
     <div title="播放/暂停" class="iconfont icon-play"></div>
-    <h3 class="subtitle">My new post</h3>
+    <h3 class="subtitle">hexo修改主题</h3>
     <div class="social">
         <div>
             <div class="share">
@@ -60,14 +63,41 @@
     <div class="section">
         <div class="article">
     <div class='main'>
-        <h1 class="title">My new post</h1>
+        <h1 class="title">hexo修改主题</h1>
         <div class="stuff">
             <span>八月 06, 2022</span>
             
 
         </div>
         <div class="content markdown">
-            
+            <h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
+<li>找到主题的下载链接,例如：<a target="_blank" rel="noopener" href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git clone https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
+<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
+<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
+<li>新建一个页面，命名为categories。命令如下：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type: &quot;categories&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
+<li>新建一个页面，命名为tags。命令如下：<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type: &quot;tags&quot;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
+<li>需要安装hexo的搜索插件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后输入以下命令查看安装情况<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ls --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
+<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br></pre></td></tr></table></figure>
+以上代码直接复制粘贴到全局配置文件中</li>
+<li>新建一个页面，命名为search。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type: &quot;search&quot;</span><br></pre></td></tr></table></figure></li>
+<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#本地搜索,请将索引文件放在网站根目录</span><br><span class="line">local_search:</span><br><span class="line">    #是否启用</span><br><span class="line">    enable: true</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>最后部署到GitHub<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure></li>
+</ul>
+
             <!--[if lt IE 9]><script>document.createElement('audio');</script><![endif]-->
             <audio id="audio" loop="1" preload="auto" controls="controls" data-autoplay="true">
                 <source type="audio/mpeg" src="">
