@@ -21,7 +21,11 @@
   <entry>
     <title>hexo修改主题</title>
     <url>/2022/08/06/hexo%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</url>
-    <content><![CDATA[<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
+    <content><![CDATA[<ul>
+<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
+</ul>
+<hr>
+<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
 <li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
