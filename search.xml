@@ -19,6 +19,60 @@
 ]]></content>
   </entry>
   <entry>
+    <title>网络安全学习之信息收集</title>
+    <url>/2022/08/07/%E7%BD%91%E5%AE%89%E5%AD%A6%E4%B9%A0%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="渗透的本质就是信息收集"><a href="#渗透的本质就是信息收集" class="headerlink" title="渗透的本质就是信息收集"></a>渗透的本质就是信息收集</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><ul>
+<li>信息收集是渗透测试的第一阶段，利用传统的搜索引擎，物联网引擎或直接使用本地工具对目标进行操作系统探测、端口扫描、Web目录扫描、Web指纹识别等，收集的信息越多渗透测试的成功率越高。“渗透的本质就是信息收集”</li>
+<li>分类：信息收集分为主动和被动<br>主动：直接访问、扫描网站这种将流量流经网站的行为<br>被动：利用第三方暴露在外，主要是互联网的信息进行收集</li>
+</ul>
+<h2 id="Google-Hack"><a href="#Google-Hack" class="headerlink" title="Google Hack"></a>Google Hack</h2><ul>
+<li>“+”强制包含某个关键字符进行查询<br>“-”查询的时候忽略某个字符<br>“*”匹配任意字符进行查询<br>“site”指定域名进行查询<br>“intext”正文中存在关键词的网页<br>“intitle”标题中存在关键词的网页<br>“inurl”URL中存在关键词的网页<br>“filetype”搜索指定文件类型</li>
+<li>查找文件上传点<br>inurl:admin&#x2F;upfile.asp<br>inurl:admin&#x2F;upload.asp<br>inurl:RichWidgets&#x2F;Popup_Upload.aspx  </li>
+<li>查找目录遍历站点<br>intitle：”index of”  </li>
+<li>寻找存在注入的PHP站点<br>inurl:”.php?id&#x3D;” “You have an error in your SQL syntax”</li>
+<li>寻找网站后台<br>intitle:后台登陆<br>inurl:login|admin|manage|member|admin_login|login_admin|system|login|user|main|cms<br>inrtl:houtai.php|houtai.asp<br>intext:管理|后台|登录|用户名|密码|系统|账号<br><a href="https://www.exploit-db.com/google-hacking-database">https:www.exploit-db.com/google-hacking-database</a></li>
+</ul>
+<h2 id="物联网搜索引擎"><a href="#物联网搜索引擎" class="headerlink" title="物联网搜索引擎"></a>物联网搜索引擎</h2><ul>
+<li>Shodan.io<br>指定语法：<br>net:搜索指定ip地址或子网，c段<br>hostname:搜索指定的域名或服务器<br>port:搜索开放指定端口的设备<br>org:搜索指定公司或组织的设备<br>product：搜索运行指定产品或软件操系统的设备<br>version：指定软件的版本<br>isp：搜索指定isp供应商的设备<br>country：搜索指定国家的设备<br>city：搜索指定城市的设备</li>
+<li>fofa.so</li>
+</ul>
+<h2 id="子域名收集"><a href="#子域名收集" class="headerlink" title="子域名收集"></a>子域名收集</h2><ul>
+<li>&lt;phpinfo.me&gt;</li>
+</ul>
+<h2 id="C段与旁站"><a href="#C段与旁站" class="headerlink" title="C段与旁站"></a>C段与旁站</h2><ul>
+<li>C段<br>192.168.1.1&#x2F;24<br>192.168.1.1-192.168.1.255<br>B段<br>172.1.1.1&#x2F;16<br>172.1.1.1-172.1.1.255<br>A段<br>10.1.1.1-10.255.255.255<br>一般渗透测试对C段锦兴扫描，内网中会对B段进行探测扫描<br>必应，爱站，Fofa(获取到域名的IP地址后，可以反查域名)<br>内网：HTTPScan</li>
+</ul>
+<h2 id="服务器信息查询"><a href="#服务器信息查询" class="headerlink" title="服务器信息查询"></a>服务器信息查询</h2><ul>
+<li>CDN，将源站的内容发布到接近用户的网络边缘，用户可以就近获取数据，不仅降低了网络的拥塞情况、提高请求的响应速度，也能够减少源站的负载压力  </li>
+<li>ping命令<br>直接ping查询地址信息：ping.xxx.com可能得到其真实IP  </li>
+<li>nslookup查询<br>域名解析结果为多个ip，多半使用了CDN，是不真实的ip  </li>
+<li>超级ping<br>爱站超级ping  </li>
+<li>解析历史记录查询<br>查询ip与域名绑定历史记录，可能会发现使用CDN之前的目标ip  </li>
+<li>子域名绕过<br>很多网站的主站的访问大，主站挂CDN，分站不一定，结合之前的子域名爆破来进行收集  </li>
+<li>利用站点功能主动发起请求<br>一些网站提供注册服务，可能服务器本身自带sendmail可以直接发送邮件，通过邮件发送往往也能得到到服务器IP  </li>
+<li>利用网站漏洞<br>如果目标站点存在漏洞，如phpinfo敏感信息泄露，Struts2、网页源代码泄露、svn信息泄露、Github信息泄露<br>若存在Web泄露，服务器主动与我们发起请求连接，我们也能获取目标站点真实IP，例如xss等  </li>
+<li>国外访问</li>
+</ul>
+<h2 id="社工信息收集"><a href="#社工信息收集" class="headerlink" title="社工信息收集"></a>社工信息收集</h2><ul>
+<li>whois查询<br>whois.bugscaner.com<br>whois.aizhan.com<br>whois.chinaz.com  </li>
+<li>注册网站查询<br><a href="http://www.reg007.com/">www.reg007.com</a><br>inurl:t.me社工库<br>密码泄露查询：haveibeenpwned.com<br>国家职业资格证查询<br>身份证查询：http&#x2F;&#x2F;w<a href="http://www.2cha.com/">www.2cha.com</a><br>经纬度查询：http:&#x2F;<a href="http://www.gpsspg.com/maps.htm">www.gpsspg.com/maps.htm</a><br>微信搜索：http:&#x2F;weixin.sougou.com<br>Github信息收集</li>
+</ul>
+<h2 id="Nmap与Masscan"><a href="#Nmap与Masscan" class="headerlink" title="Nmap与Masscan"></a>Nmap与Masscan</h2><ul>
+<li>Nmap：网络映射器，一个开源端口扫描器，可以扫描大型网络也可以扫描单个主机<br>端口扫描是指人为发送一组端口扫描信息试图以了解某台计算机的弱点并了解其提供的计算机网络服务类型。  </li>
+<li>端口状态：<br>open对外开放<br>close对外关闭<br>Fitered无法判断被防火墙设备拦截过滤<br>Unfitered未被过滤，使用ACK扫描才可能出现这种情况<br>open\Fitered不能确定开放还是被过滤<br>close\Fitered不能确定关闭还是被过滤  </li>
+<li>主机发现：<br>-sP:ping扫描<br>-P0&#x2F;Pn:无ping扫描<br>-Ps：TCP SYN Ping扫描<br>-PA：TCP ACK ping扫描<br>-PU：UDP Ping扫描<br>-PE&#x2F;PP&#x2F;PM:ICMP Ping Types扫描<br>-PR:ARP Ping扫描<br>-sL：列表扫描<br>-6：扫描IPv6地址<br>–traceroute：路由跟踪<br>-PY：SCTP INIT Ping扫描  </li>
+<li>指纹探测<br>-sV：版本探测<br>-A：更加详细直观的扫描<br>–version-intensity：设置扫描强度1~9默认为7<br>–version-light：轻量级扫描，默认值为2<br>–version-all：重量级扫描，强度为9<br>-O：启动操作系统扫描  </li>
+<li>时间模板<br>-T0：非常慢，用于IDS躲避<br>-T1：缓慢的扫描，用于IDS躲避<br>-T2：降低了扫描速度，以使用更少的带宽和目标主机资源<br>-T3：默认模式，根据目标的反应自动调整时间<br>-T4：假设用户具有可靠的网络从而加速扫描<br>-T5：急速扫描，为了获得速度而牺牲准确性  </li>
+<li>TCP SYN扫描：<br>较常用的扫描方式，被称为半开放扫描，速度快，较隐蔽</li>
+</ul>
+<h2 id="提取指纹信息"><a href="#提取指纹信息" class="headerlink" title="提取指纹信息"></a>提取指纹信息</h2><ul>
+<li>返回包直接提取指纹信息  </li>
+<li>网站源码指纹提取指纹信息  </li>
+<li>指定文件的MD5值校验</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>hexo修改主题</title>
     <url>/2022/08/06/hexo%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
@@ -82,60 +136,6 @@
 <li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="写入IDAT数据块"><a href="#写入IDAT数据块" class="headerlink" title="写入IDAT数据块"></a>写入IDAT数据块</h2><p>PNG也是可以通过IDAT数据块来绕过渲染的。</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>网络安全学习之信息收集</title>
-    <url>/2022/08/07/%E7%BD%91%E5%AE%89%E5%AD%A6%E4%B9%A0%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="渗透的本质就是信息收集"><a href="#渗透的本质就是信息收集" class="headerlink" title="渗透的本质就是信息收集"></a>渗透的本质就是信息收集</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><ul>
-<li>信息收集是渗透测试的第一阶段，利用传统的搜索引擎，物联网引擎或直接使用本地工具对目标进行操作系统探测、端口扫描、Web目录扫描、Web指纹识别等，收集的信息越多渗透测试的成功率越高。“渗透的本质就是信息收集”</li>
-<li>分类：信息收集分为主动和被动<br>主动：直接访问、扫描网站这种将流量流经网站的行为<br>被动：利用第三方暴露在外，主要是互联网的信息进行收集</li>
-</ul>
-<h2 id="Google-Hack"><a href="#Google-Hack" class="headerlink" title="Google Hack"></a>Google Hack</h2><ul>
-<li>“+”强制包含某个关键字符进行查询<br>“-”查询的时候忽略某个字符<br>“*”匹配任意字符进行查询<br>“site”指定域名进行查询<br>“intext”正文中存在关键词的网页<br>“intitle”标题中存在关键词的网页<br>“inurl”URL中存在关键词的网页<br>“filetype”搜索指定文件类型</li>
-<li>查找文件上传点<br>inurl:admin&#x2F;upfile.asp<br>inurl:admin&#x2F;upload.asp<br>inurl:RichWidgets&#x2F;Popup_Upload.aspx  </li>
-<li>查找目录遍历站点<br>intitle：”index of”  </li>
-<li>寻找存在注入的PHP站点<br>inurl:”.php?id&#x3D;” “You have an error in your SQL syntax”</li>
-<li>寻找网站后台<br>intitle:后台登陆<br>inurl:login|admin|manage|member|admin_login|login_admin|system|login|user|main|cms<br>inrtl:houtai.php|houtai.asp<br>intext:管理|后台|登录|用户名|密码|系统|账号<br><a href="https://www.exploit-db.com/google-hacking-database">https:www.exploit-db.com/google-hacking-database</a></li>
-</ul>
-<h2 id="物联网搜索引擎"><a href="#物联网搜索引擎" class="headerlink" title="物联网搜索引擎"></a>物联网搜索引擎</h2><ul>
-<li>Shodan.io<br>指定语法：<br>net:搜索指定ip地址或子网，c段<br>hostname:搜索指定的域名或服务器<br>port:搜索开放指定端口的设备<br>org:搜索指定公司或组织的设备<br>product：搜索运行指定产品或软件操系统的设备<br>version：指定软件的版本<br>isp：搜索指定isp供应商的设备<br>country：搜索指定国家的设备<br>city：搜索指定城市的设备</li>
-<li>fofa.so</li>
-</ul>
-<h2 id="子域名收集"><a href="#子域名收集" class="headerlink" title="子域名收集"></a>子域名收集</h2><ul>
-<li>&lt;phpinfo.me&gt;</li>
-</ul>
-<h2 id="C段与旁站"><a href="#C段与旁站" class="headerlink" title="C段与旁站"></a>C段与旁站</h2><ul>
-<li>C段<br>192.168.1.1&#x2F;24<br>192.168.1.1-192.168.1.255<br>B段<br>172.1.1.1&#x2F;16<br>172.1.1.1-172.1.1.255<br>A段<br>10.1.1.1-10.255.255.255<br>一般渗透测试对C段锦兴扫描，内网中会对B段进行探测扫描<br>必应，爱站，Fofa(获取到域名的IP地址后，可以反查域名)<br>内网：HTTPScan</li>
-</ul>
-<h2 id="服务器信息查询"><a href="#服务器信息查询" class="headerlink" title="服务器信息查询"></a>服务器信息查询</h2><ul>
-<li>CDN，将源站的内容发布到接近用户的网络边缘，用户可以就近获取数据，不仅降低了网络的拥塞情况、提高请求的响应速度，也能够减少源站的负载压力  </li>
-<li>ping命令<br>直接ping查询地址信息：ping.xxx.com可能得到其真实IP  </li>
-<li>nslookup查询<br>域名解析结果为多个ip，多半使用了CDN，是不真实的ip  </li>
-<li>超级ping<br>爱站超级ping  </li>
-<li>解析历史记录查询<br>查询ip与域名绑定历史记录，可能会发现使用CDN之前的目标ip  </li>
-<li>子域名绕过<br>很多网站的主站的访问大，主站挂CDN，分站不一定，结合之前的子域名爆破来进行收集  </li>
-<li>利用站点功能主动发起请求<br>一些网站提供注册服务，可能服务器本身自带sendmail可以直接发送邮件，通过邮件发送往往也能得到到服务器IP  </li>
-<li>利用网站漏洞<br>如果目标站点存在漏洞，如phpinfo敏感信息泄露，Struts2、网页源代码泄露、svn信息泄露、Github信息泄露<br>若存在Web泄露，服务器主动与我们发起请求连接，我们也能获取目标站点真实IP，例如xss等  </li>
-<li>国外访问</li>
-</ul>
-<h2 id="社工信息收集"><a href="#社工信息收集" class="headerlink" title="社工信息收集"></a>社工信息收集</h2><ul>
-<li>whois查询<br>whois.bugscaner.com<br>whois.aizhan.com<br>whois.chinaz.com  </li>
-<li>注册网站查询<br><a href="http://www.reg007.com/">www.reg007.com</a><br>inurl:t.me社工库<br>密码泄露查询：haveibeenpwned.com<br>国家职业资格证查询<br>身份证查询：http&#x2F;&#x2F;w<a href="http://www.2cha.com/">www.2cha.com</a><br>经纬度查询：http:&#x2F;<a href="http://www.gpsspg.com/maps.htm">www.gpsspg.com/maps.htm</a><br>微信搜索：http:&#x2F;weixin.sougou.com<br>Github信息收集</li>
-</ul>
-<h2 id="Nmap与Masscan"><a href="#Nmap与Masscan" class="headerlink" title="Nmap与Masscan"></a>Nmap与Masscan</h2><ul>
-<li>Nmap：网络映射器，一个开源端口扫描器，可以扫描大型网络也可以扫描单个主机<br>端口扫描是指人为发送一组端口扫描信息试图以了解某台计算机的弱点并了解其提供的计算机网络服务类型。  </li>
-<li>端口状态：<br>open对外开放<br>close对外关闭<br>Fitered无法判断被防火墙设备拦截过滤<br>Unfitered未被过滤，使用ACK扫描才可能出现这种情况<br>open\Fitered不能确定开放还是被过滤<br>close\Fitered不能确定关闭还是被过滤  </li>
-<li>主机发现：<br>-sP:ping扫描<br>-P0&#x2F;Pn:无ping扫描<br>-Ps：TCP SYN Ping扫描<br>-PA：TCP ACK ping扫描<br>-PU：UDP Ping扫描<br>-PE&#x2F;PP&#x2F;PM:ICMP Ping Types扫描<br>-PR:ARP Ping扫描<br>-sL：列表扫描<br>-6：扫描IPv6地址<br>–traceroute：路由跟踪<br>-PY：SCTP INIT Ping扫描  </li>
-<li>指纹探测<br>-sV：版本探测<br>-A：更加详细直观的扫描<br>–version-intensity：设置扫描强度1~9默认为7<br>–version-light：轻量级扫描，默认值为2<br>–version-all：重量级扫描，强度为9<br>-O：启动操作系统扫描  </li>
-<li>时间模板<br>-T0：非常慢，用于IDS躲避<br>-T1：缓慢的扫描，用于IDS躲避<br>-T2：降低了扫描速度，以使用更少的带宽和目标主机资源<br>-T3：默认模式，根据目标的反应自动调整时间<br>-T4：假设用户具有可靠的网络从而加速扫描<br>-T5：急速扫描，为了获得速度而牺牲准确性  </li>
-<li>TCP SYN扫描：<br>较常用的扫描方式，被称为半开放扫描，速度快，较隐蔽</li>
-</ul>
-<h2 id="提取指纹信息"><a href="#提取指纹信息" class="headerlink" title="提取指纹信息"></a>提取指纹信息</h2><ul>
-<li>返回包直接提取指纹信息  </li>
-<li>网站源码指纹提取指纹信息  </li>
-<li>指定文件的MD5值校验</li>
-</ul>
 ]]></content>
   </entry>
 </search>
