@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>hexo修改主题</title>
+    <url>/2022/08/06/hexo%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
+<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
+</ul>
+<hr>
+<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
+<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
+<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
+<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
+<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
+<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
+<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
+<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
+以上代码直接复制粘贴到全局配置文件中</li>
+<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>网络安全学习之信息收集</title>
+    <url>/2022/08/07/%E7%BD%91%E5%AE%89%E5%AD%A6%E4%B9%A0%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="渗透的本质就是信息收集"><a href="#渗透的本质就是信息收集" class="headerlink" title="渗透的本质就是信息收集"></a>渗透的本质就是信息收集</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><ul>
+<li>信息收集是渗透测试的第一阶段，利用传统的搜索引擎，物联网引擎或直接使用本地工具对目标进行操作系统探测、端口扫描、Web目录扫描、Web指纹识别等，收集的信息越多渗透测试的成功率越高。“渗透的本质就是信息收集”</li>
+<li>分类：信息收集分为主动和被动<br>主动：直接访问、扫描网站这种将流量流经网站的行为<br>被动：利用第三方暴露在外，主要是互联网的信息进行收集</li>
+</ul>
+<h2 id="Google-Hack"><a href="#Google-Hack" class="headerlink" title="Google Hack"></a>Google Hack</h2><ul>
+<li>“+”强制包含某个关键字符进行查询<br>“-”查询的时候忽略某个字符<br>“*”匹配任意字符进行查询<br>“site”指定域名进行查询<br>“intext”正文中存在关键词的网页<br>“intitle”标题中存在关键词的网页<br>“inurl”URL中存在关键词的网页<br>“filetype”搜索指定文件类型</li>
+<li>查找文件上传点<br>inurl:admin&#x2F;upfile.asp<br>inurl:admin&#x2F;upload.asp<br>inurl:RichWidgets&#x2F;Popup_Upload.aspx  </li>
+<li>查找目录遍历站点<br>intitle：”index of”  </li>
+<li>寻找存在注入的PHP站点<br>inurl:”.php?id&#x3D;” “You have an error in your SQL syntax”</li>
+<li>寻找网站后台<br>intitle:后台登陆<br>inurl:login|admin|manage|member|admin_login|login_admin|system|login|user|main|cms<br>inrtl:houtai.php|houtai.asp<br>intext:管理|后台|登录|用户名|密码|系统|账号<br><a href="https://www.exploit-db.com/google-hacking-database">https:www.exploit-db.com/google-hacking-database</a></li>
+</ul>
+<h2 id="物联网搜索引擎"><a href="#物联网搜索引擎" class="headerlink" title="物联网搜索引擎"></a>物联网搜索引擎</h2><ul>
+<li>Shodan.io<br>指定语法：<br>net:搜索指定ip地址或子网，c段<br>hostname:搜索指定的域名或服务器<br>port:搜索开放指定端口的设备<br>org:搜索指定公司或组织的设备<br>product：搜索运行指定产品或软件操系统的设备<br>version：指定软件的版本<br>isp：搜索指定isp供应商的设备<br>country：搜索指定国家的设备<br>city：搜索指定城市的设备</li>
+<li>fofa.so</li>
+</ul>
+<h2 id="子域名收集"><a href="#子域名收集" class="headerlink" title="子域名收集"></a>子域名收集</h2><ul>
+<li>&lt;phpinfo.me&gt;</li>
+</ul>
+<h2 id="C段与旁站"><a href="#C段与旁站" class="headerlink" title="C段与旁站"></a>C段与旁站</h2><ul>
+<li>C段<br>192.168.1.1&#x2F;24<br>192.168.1.1-192.168.1.255<br>B段<br>172.1.1.1&#x2F;16<br>172.1.1.1-172.1.1.255<br>A段<br>10.1.1.1-10.255.255.255<br>一般渗透测试对C段锦兴扫描，内网中会对B段进行探测扫描<br>必应，爱站，Fofa(获取到域名的IP地址后，可以反查域名)<br>内网：HTTPScan</li>
+</ul>
+<h2 id="服务器信息查询"><a href="#服务器信息查询" class="headerlink" title="服务器信息查询"></a>服务器信息查询</h2><ul>
+<li>CDN，将源站的内容发布到接近用户的网络边缘，用户可以就近获取数据，不仅降低了网络的拥塞情况、提高请求的响应速度，也能够减少源站的负载压力  </li>
+<li>ping命令<br>直接ping查询地址信息：ping.xxx.com可能得到其真实IP  </li>
+<li>nslookup查询<br>域名解析结果为多个ip，多半使用了CDN，是不真实的ip  </li>
+<li>超级ping<br>爱站超级ping  </li>
+<li>解析历史记录查询<br>查询ip与域名绑定历史记录，可能会发现使用CDN之前的目标ip  </li>
+<li>子域名绕过<br>很多网站的主站的访问大，主站挂CDN，分站不一定，结合之前的子域名爆破来进行收集  </li>
+<li>利用站点功能主动发起请求<br>一些网站提供注册服务，可能服务器本身自带sendmail可以直接发送邮件，通过邮件发送往往也能得到到服务器IP  </li>
+<li>利用网站漏洞<br>如果目标站点存在漏洞，如phpinfo敏感信息泄露，Struts2、网页源代码泄露、svn信息泄露、Github信息泄露<br>若存在Web泄露，服务器主动与我们发起请求连接，我们也能获取目标站点真实IP，例如xss等  </li>
+<li>国外访问</li>
+</ul>
+<h2 id="社工信息收集"><a href="#社工信息收集" class="headerlink" title="社工信息收集"></a>社工信息收集</h2><ul>
+<li>whois查询<br>whois.bugscaner.com<br>whois.aizhan.com<br>whois.chinaz.com  </li>
+<li>注册网站查询<br><a href="http://www.reg007.com/">www.reg007.com</a><br>inurl:t.me社工库<br>密码泄露查询：haveibeenpwned.com<br>国家职业资格证查询<br>身份证查询：http&#x2F;&#x2F;w<a href="http://www.2cha.com/">www.2cha.com</a><br>经纬度查询：http:&#x2F;<a href="http://www.gpsspg.com/maps.htm">www.gpsspg.com/maps.htm</a><br>微信搜索：http:&#x2F;weixin.sougou.com<br>Github信息收集</li>
+</ul>
+<h2 id="Nmap与Masscan"><a href="#Nmap与Masscan" class="headerlink" title="Nmap与Masscan"></a>Nmap与Masscan</h2><ul>
+<li>Nmap：网络映射器，一个开源端口扫描器，可以扫描大型网络也可以扫描单个主机<br>端口扫描是指人为发送一组端口扫描信息试图以了解某台计算机的弱点并了解其提供的计算机网络服务类型。  </li>
+<li>端口状态：<br>open对外开放<br>close对外关闭<br>Fitered无法判断被防火墙设备拦截过滤<br>Unfitered未被过滤，使用ACK扫描才可能出现这种情况<br>open\Fitered不能确定开放还是被过滤<br>close\Fitered不能确定关闭还是被过滤  </li>
+<li>主机发现：<br>-sP:ping扫描<br>-P0&#x2F;Pn:无ping扫描<br>-Ps：TCP SYN Ping扫描<br>-PA：TCP ACK ping扫描<br>-PU：UDP Ping扫描<br>-PE&#x2F;PP&#x2F;PM:ICMP Ping Types扫描<br>-PR:ARP Ping扫描<br>-sL：列表扫描<br>-6：扫描IPv6地址<br>–traceroute：路由跟踪<br>-PY：SCTP INIT Ping扫描  </li>
+<li>指纹探测<br>-sV：版本探测<br>-A：更加详细直观的扫描<br>–version-intensity：设置扫描强度1~9默认为7<br>–version-light：轻量级扫描，默认值为2<br>–version-all：重量级扫描，强度为9<br>-O：启动操作系统扫描  </li>
+<li>时间模板<br>-T0：非常慢，用于IDS躲避<br>-T1：缓慢的扫描，用于IDS躲避<br>-T2：降低了扫描速度，以使用更少的带宽和目标主机资源<br>-T3：默认模式，根据目标的反应自动调整时间<br>-T4：假设用户具有可靠的网络从而加速扫描<br>-T5：急速扫描，为了获得速度而牺牲准确性  </li>
+<li>TCP SYN扫描：<br>较常用的扫描方式，被称为半开放扫描，速度快，较隐蔽</li>
+</ul>
+<h2 id="提取指纹信息"><a href="#提取指纹信息" class="headerlink" title="提取指纹信息"></a>提取指纹信息</h2><ul>
+<li>返回包直接提取指纹信息  </li>
+<li>网站源码指纹提取指纹信息  </li>
+<li>指定文件的MD5值校验</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/2022/08/03/hello-world/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -61,114 +151,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>网络安全学习之信息收集</title>
-    <url>/2022/08/07/%E7%BD%91%E5%AE%89%E5%AD%A6%E4%B9%A0%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h3 id="渗透的本质就是信息收集"><a href="#渗透的本质就是信息收集" class="headerlink" title="渗透的本质就是信息收集"></a>渗透的本质就是信息收集</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><ul>
-<li>信息收集是渗透测试的第一阶段，利用传统的搜索引擎，物联网引擎或直接使用本地工具对目标进行操作系统探测、端口扫描、Web目录扫描、Web指纹识别等，收集的信息越多渗透测试的成功率越高。“渗透的本质就是信息收集”</li>
-<li>分类：信息收集分为主动和被动<br>主动：直接访问、扫描网站这种将流量流经网站的行为<br>被动：利用第三方暴露在外，主要是互联网的信息进行收集</li>
-</ul>
-<h2 id="Google-Hack"><a href="#Google-Hack" class="headerlink" title="Google Hack"></a>Google Hack</h2><ul>
-<li>“+”强制包含某个关键字符进行查询<br>“-”查询的时候忽略某个字符<br>“*”匹配任意字符进行查询<br>“site”指定域名进行查询<br>“intext”正文中存在关键词的网页<br>“intitle”标题中存在关键词的网页<br>“inurl”URL中存在关键词的网页<br>“filetype”搜索指定文件类型</li>
-<li>查找文件上传点<br>inurl:admin&#x2F;upfile.asp<br>inurl:admin&#x2F;upload.asp<br>inurl:RichWidgets&#x2F;Popup_Upload.aspx  </li>
-<li>查找目录遍历站点<br>intitle：”index of”  </li>
-<li>寻找存在注入的PHP站点<br>inurl:”.php?id&#x3D;” “You have an error in your SQL syntax”</li>
-<li>寻找网站后台<br>intitle:后台登陆<br>inurl:login|admin|manage|member|admin_login|login_admin|system|login|user|main|cms<br>inrtl:houtai.php|houtai.asp<br>intext:管理|后台|登录|用户名|密码|系统|账号<br><a href="https://www.exploit-db.com/google-hacking-database">https:www.exploit-db.com/google-hacking-database</a></li>
-</ul>
-<h2 id="物联网搜索引擎"><a href="#物联网搜索引擎" class="headerlink" title="物联网搜索引擎"></a>物联网搜索引擎</h2><ul>
-<li>Shodan.io<br>指定语法：<br>net:搜索指定ip地址或子网，c段<br>hostname:搜索指定的域名或服务器<br>port:搜索开放指定端口的设备<br>org:搜索指定公司或组织的设备<br>product：搜索运行指定产品或软件操系统的设备<br>version：指定软件的版本<br>isp：搜索指定isp供应商的设备<br>country：搜索指定国家的设备<br>city：搜索指定城市的设备</li>
-<li>fofa.so</li>
-</ul>
-<h2 id="子域名收集"><a href="#子域名收集" class="headerlink" title="子域名收集"></a>子域名收集</h2><ul>
-<li>&lt;phpinfo.me&gt;</li>
-</ul>
-<h2 id="C段与旁站"><a href="#C段与旁站" class="headerlink" title="C段与旁站"></a>C段与旁站</h2><ul>
-<li>C段<br>192.168.1.1&#x2F;24<br>192.168.1.1-192.168.1.255<br>B段<br>172.1.1.1&#x2F;16<br>172.1.1.1-172.1.1.255<br>A段<br>10.1.1.1-10.255.255.255<br>一般渗透测试对C段锦兴扫描，内网中会对B段进行探测扫描<br>必应，爱站，Fofa(获取到域名的IP地址后，可以反查域名)<br>内网：HTTPScan</li>
-</ul>
-<h2 id="服务器信息查询"><a href="#服务器信息查询" class="headerlink" title="服务器信息查询"></a>服务器信息查询</h2><ul>
-<li>CDN，将源站的内容发布到接近用户的网络边缘，用户可以就近获取数据，不仅降低了网络的拥塞情况、提高请求的响应速度，也能够减少源站的负载压力  </li>
-<li>ping命令<br>直接ping查询地址信息：ping.xxx.com可能得到其真实IP  </li>
-<li>nslookup查询<br>域名解析结果为多个ip，多半使用了CDN，是不真实的ip  </li>
-<li>超级ping<br>爱站超级ping  </li>
-<li>解析历史记录查询<br>查询ip与域名绑定历史记录，可能会发现使用CDN之前的目标ip  </li>
-<li>子域名绕过<br>很多网站的主站的访问大，主站挂CDN，分站不一定，结合之前的子域名爆破来进行收集  </li>
-<li>利用站点功能主动发起请求<br>一些网站提供注册服务，可能服务器本身自带sendmail可以直接发送邮件，通过邮件发送往往也能得到到服务器IP  </li>
-<li>利用网站漏洞<br>如果目标站点存在漏洞，如phpinfo敏感信息泄露，Struts2、网页源代码泄露、svn信息泄露、Github信息泄露<br>若存在Web泄露，服务器主动与我们发起请求连接，我们也能获取目标站点真实IP，例如xss等  </li>
-<li>国外访问</li>
-</ul>
-<h2 id="社工信息收集"><a href="#社工信息收集" class="headerlink" title="社工信息收集"></a>社工信息收集</h2><ul>
-<li>whois查询<br>whois.bugscaner.com<br>whois.aizhan.com<br>whois.chinaz.com  </li>
-<li>注册网站查询<br><a href="http://www.reg007.com/">www.reg007.com</a><br>inurl:t.me社工库<br>密码泄露查询：haveibeenpwned.com<br>国家职业资格证查询<br>身份证查询：http&#x2F;&#x2F;w<a href="http://www.2cha.com/">www.2cha.com</a><br>经纬度查询：http:&#x2F;<a href="http://www.gpsspg.com/maps.htm">www.gpsspg.com/maps.htm</a><br>微信搜索：http:&#x2F;weixin.sougou.com<br>Github信息收集</li>
-</ul>
-<h2 id="Nmap与Masscan"><a href="#Nmap与Masscan" class="headerlink" title="Nmap与Masscan"></a>Nmap与Masscan</h2><ul>
-<li>Nmap：网络映射器，一个开源端口扫描器，可以扫描大型网络也可以扫描单个主机<br>端口扫描是指人为发送一组端口扫描信息试图以了解某台计算机的弱点并了解其提供的计算机网络服务类型。  </li>
-<li>端口状态：<br>open对外开放<br>close对外关闭<br>Fitered无法判断被防火墙设备拦截过滤<br>Unfitered未被过滤，使用ACK扫描才可能出现这种情况<br>open\Fitered不能确定开放还是被过滤<br>close\Fitered不能确定关闭还是被过滤  </li>
-<li>主机发现：<br>-sP:ping扫描<br>-P0&#x2F;Pn:无ping扫描<br>-Ps：TCP SYN Ping扫描<br>-PA：TCP ACK ping扫描<br>-PU：UDP Ping扫描<br>-PE&#x2F;PP&#x2F;PM:ICMP Ping Types扫描<br>-PR:ARP Ping扫描<br>-sL：列表扫描<br>-6：扫描IPv6地址<br>–traceroute：路由跟踪<br>-PY：SCTP INIT Ping扫描  </li>
-<li>指纹探测<br>-sV：版本探测<br>-A：更加详细直观的扫描<br>–version-intensity：设置扫描强度1~9默认为7<br>–version-light：轻量级扫描，默认值为2<br>–version-all：重量级扫描，强度为9<br>-O：启动操作系统扫描  </li>
-<li>时间模板<br>-T0：非常慢，用于IDS躲避<br>-T1：缓慢的扫描，用于IDS躲避<br>-T2：降低了扫描速度，以使用更少的带宽和目标主机资源<br>-T3：默认模式，根据目标的反应自动调整时间<br>-T4：假设用户具有可靠的网络从而加速扫描<br>-T5：急速扫描，为了获得速度而牺牲准确性  </li>
-<li>TCP SYN扫描：<br>较常用的扫描方式，被称为半开放扫描，速度快，较隐蔽</li>
-</ul>
-<h2 id="提取指纹信息"><a href="#提取指纹信息" class="headerlink" title="提取指纹信息"></a>提取指纹信息</h2><ul>
-<li>返回包直接提取指纹信息  </li>
-<li>网站源码指纹提取指纹信息  </li>
-<li>指定文件的MD5值校验</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title>网络安全学习之认证技术</title>
-    <url>/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="系统认证爆破"><a href="#系统认证爆破" class="headerlink" title="系统认证爆破"></a>系统认证爆破</h2><h3 id="爆破工具："><a href="#爆破工具：" class="headerlink" title="爆破工具："></a>爆破工具：</h3><ul>
-<li>Hydar（九头蛇）<br><a href="https://github.com/vanhauser-thc/thc-hydar">https://github.com/vanhauser-thc/thc-hydar</a><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/1.png"><br>常用口令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># FTP爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ftp://192.168.0.1 -vV    //大写字母表示导入一个字典。-vV爆出输出日志，看是什么时候成功的</span><br><span class="line"></span><br><span class="line"># SSH爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ssh://192.168.0.1 --vV</span><br><span class="line"></span><br><span class="line"># SMB爆破</span><br><span class="line">hydar -l admin -P password.txt smb://10.211.55.9      //小写字母&quot;l表示单个用户</span><br><span class="line"></span><br><span class="line"># MSSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mssql -vV</span><br><span class="line"></span><br><span class="line">#MYSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mysql -vV</span><br></pre></td></tr></table></figure></li>
-<li>SNETCarcker(超级弱口令工具)<br><a href="https://github.com/shack2/SNETCarcker">https://github.com/shack2/SNETCarcker</a><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/2.png"><br>是一款windows平台的弱口令审计工具，支持批量多线程检查<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/3.png"><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/4.png"></li>
-<li>关闭防火墙<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/5.png"></li>
-</ul>
-<p><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/6.png"><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/7.png"></p>
-<h2 id="爆破-1521-Oracle"><a href="#爆破-1521-Oracle" class="headerlink" title="爆破 1521 Oracle"></a>爆破 1521 Oracle</h2><ul>
-<li>Oracle Datebase，又名Oracle RDBMS，或简称Oracle，是甲骨文公司的一款关系数据库管理系统。默认端口为1521端口，和其他数据库不同的是，爆破前得先爆破队赢得SID，不过SID很多都是默认的，可以使用MSF来进行爆破。<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/8.png"></li>
-</ul>
-<h3 id="Metasploit爆破SID"><a href="#Metasploit爆破SID" class="headerlink" title="Metasploit爆破SID"></a>Metasploit爆破SID</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/oracle/sid_bruate</span><br><span class="line">set RH0STS 10.211.55.6</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
-<h3 id="爆破-3306-MySQL"><a href="#爆破-3306-MySQL" class="headerlink" title="爆破 3306 MySQL"></a>爆破 3306 MySQL</h3><ul>
-<li>MySQL是一个关系型数据库管理系统，默认端口为3306<br>爆破前检测是否开启数据库外连，不要做无意义的爆破，可以手动写Python脚本来批量验证。</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title>hexo修改主题</title>
-    <url>/2022/08/06/hexo%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
-<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
-</ul>
-<hr>
-<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
-<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
-<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
-<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
-<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
-<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
-<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
-<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
-<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
-以上代码直接复制粘贴到全局配置文件中</li>
-<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
     <title>网络安全学习之文件上传</title>
     <url>/2022/08/08/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
@@ -204,5 +186,23 @@
 <li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
+  </entry>
+  <entry>
+    <title>网络安全之认证技术</title>
+    <url>/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="系统认证爆破"><a href="#系统认证爆破" class="headerlink" title="系统认证爆破"></a>系统认证爆破</h2><h3 id="爆破工具："><a href="#爆破工具：" class="headerlink" title="爆破工具："></a>爆破工具：</h3><ul>
+<li>Hydar（九头蛇）<br><a href="https://github.com/vanhauser-thc/thc-hydar">https://github.com/vanhauser-thc/thc-hydar</a><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/1.png"><br>常用口令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># FTP爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ftp://192.168.0.1 -vV    //大写字母表示导入一个字典。-vV爆出输出日志，看是什么时候成功的</span><br><span class="line"></span><br><span class="line"># SSH爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ssh://192.168.0.1 --vV</span><br><span class="line"></span><br><span class="line"># SMB爆破</span><br><span class="line">hydar -l admin -P password.txt smb://10.211.55.9      //小写字母&quot;l表示单个用户</span><br><span class="line"></span><br><span class="line"># MSSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mssql -vV</span><br><span class="line"></span><br><span class="line">#MYSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mysql -vV</span><br></pre></td></tr></table></figure></li>
+<li>SNETCarcker(超级弱口令工具)<br><a href="https://github.com/shack2/SNETCarcker">https://github.com/shack2/SNETCarcker</a><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/2.png"><br>是一款windows平台的弱口令审计工具，支持批量多线程检查<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/3.png"><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/4.png"></li>
+<li>关闭防火墙<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/5.png"></li>
+</ul>
+<p><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/6.png"><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/7.png"></p>
+<h2 id="爆破-1521-Oracle"><a href="#爆破-1521-Oracle" class="headerlink" title="爆破 1521 Oracle"></a>爆破 1521 Oracle</h2><ul>
+<li>Oracle Datebase，又名Oracle RDBMS，或简称Oracle，是甲骨文公司的一款关系数据库管理系统。默认端口为1521端口，和其他数据库不同的是，爆破前得先爆破队赢得SID，不过SID很多都是默认的，可以使用MSF来进行爆破。<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/8.png"></li>
+</ul>
+<h3 id="Metasploit爆破SID"><a href="#Metasploit爆破SID" class="headerlink" title="Metasploit爆破SID"></a>Metasploit爆破SID</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/oracle/sid_bruate</span><br><span class="line">set RH0STS 10.211.55.6</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h3 id="爆破-3306-MySQL"><a href="#爆破-3306-MySQL" class="headerlink" title="爆破 3306 MySQL"></a>爆破 3306 MySQL</h3><ul>
+<li>MySQL是一个关系型数据库管理系统，默认端口为3306<br>爆破前检测是否开启数据库外连，不要做无意义的爆破，可以手动写Python脚本来批量验证。</li>
+</ul>
+]]></content>
   </entry>
 </search>
