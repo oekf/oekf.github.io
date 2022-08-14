@@ -152,11 +152,11 @@
 <h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
 <li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
 </ul>
-<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527.htm/First.png" alt="例题"></p>
+<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
 <ul>
-<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527.htm/Second.png"></li>
+<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
 </ul>
-<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527.htm/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
+<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
 <h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
 <li>application….from urlLencode</li>
 <li>payload打开密码字典以换行为分割</li>
@@ -165,7 +165,7 @@
 <h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
 <li>token时间戳验证</li>
 </ul>
-<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527.htm/4.png"></p>
+<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
 <ul>
 <li>工具：PKAV HTTP Fuzzer</li>
 <li>验证码识别重放模式为单线程</li>
