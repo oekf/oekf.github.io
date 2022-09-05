@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/posts/16107.html</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>hexo修改主题</title>
     <url>/posts/38893.html</url>
     <content><![CDATA[<ul>
@@ -53,6 +35,9 @@
 <li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
 </ul>
 ]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
   </entry>
   <entry>
     <title>PHP反序列化</title>
@@ -67,6 +52,45 @@
 <p>类似的，当使用unserialize(恢复对象时，将调用__wakeup( 成员函数。这也是PHP反序列化经典的考点，CTF比赛中很多都是围绕着PHP反序列化对象的特性来突然getshell的，所以学习反序列化前得掌握「PHP基础的类与对象」。  </p>
 <h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
 <li><a href="https://www.sqlsec.com/2020/09/xdebug.html">https://www.sqlsec.com/2020/09/xdebug.html</a><br>记得改端口，将端口改为9000<br>调试：首先设置断点，开始调试，</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/posts/16107.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>XSS</title>
+    <url>/posts/3909557445.html</url>
+    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
+<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
+<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
+</ul>
+<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
+<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
+</ul>
+<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
+<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
 </ul>
 ]]></content>
       <tags>
@@ -131,20 +155,44 @@
       </tags>
   </entry>
   <entry>
-    <title>XSS</title>
-    <url>/posts/3909557445.html</url>
-    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
-<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
+    <title>密码爆破</title>
+    <url>/posts/29527.html</url>
+    <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
+<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
 </ul>
-<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
-<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
+<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
+<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
+<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
+<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
 </ul>
-<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
-<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
+<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
+<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
 </ul>
-<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
-<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
+<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
+<ul>
+<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
+</ul>
+<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
+<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
+<li>application….from urlLencode</li>
+<li>payload打开密码字典以换行为分割</li>
+<li>批量请求，寻找flag</li>
+</ul>
+<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
+<li>token时间戳验证</li>
+</ul>
+<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
+<ul>
+<li>工具：PKAV HTTP Fuzzer</li>
+<li>验证码识别重放模式为单线程</li>
+<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
+</ul>
+<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
+<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
+<li>sso————统一登陆认证</li>
+<li>加密</li>
+<li>token</li>
+<li>验证码</li>
 </ul>
 ]]></content>
       <tags>
@@ -187,51 +235,6 @@
 <li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>密码爆破</title>
-    <url>/posts/29527.html</url>
-    <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
-<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
-</ul>
-<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
-<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
-<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
-<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
-</ul>
-<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
-<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
-</ul>
-<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
-<ul>
-<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
-</ul>
-<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
-<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
-<li>application….from urlLencode</li>
-<li>payload打开密码字典以换行为分割</li>
-<li>批量请求，寻找flag</li>
-</ul>
-<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
-<li>token时间戳验证</li>
-</ul>
-<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
-<ul>
-<li>工具：PKAV HTTP Fuzzer</li>
-<li>验证码识别重放模式为单线程</li>
-<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
-</ul>
-<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
-<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
-<li>sso————统一登陆认证</li>
-<li>加密</li>
-<li>token</li>
-<li>验证码</li>
-</ul>
-]]></content>
       <tags>
         <tag>网络安全</tag>
       </tags>
