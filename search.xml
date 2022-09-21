@@ -77,6 +77,27 @@
       </tags>
   </entry>
   <entry>
+    <title>XSS</title>
+    <url>/posts/3909557445.html</url>
+    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
+<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
+<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
+</ul>
+<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
+<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
+</ul>
+<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
+<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>信息收集</title>
     <url>/posts/45922.html</url>
     <content><![CDATA[<h3 id="渗透的本质就是信息收集"><a href="#渗透的本质就是信息收集" class="headerlink" title="渗透的本质就是信息收集"></a>渗透的本质就是信息收集</h3><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><ul>
@@ -127,27 +148,6 @@
 <li>返回包直接提取指纹信息  </li>
 <li>网站源码指纹提取指纹信息  </li>
 <li>指定文件的MD5值校验</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XSS</title>
-    <url>/posts/3909557445.html</url>
-    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
-<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
-<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
-</ul>
-<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
-<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
-</ul>
-<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
-<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
 </ul>
 ]]></content>
       <tags>
