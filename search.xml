@@ -19,6 +19,45 @@
 ]]></content>
   </entry>
   <entry>
+    <title>hexo修改主题</title>
+    <url>/posts/38893.html</url>
+    <content><![CDATA[<ul>
+<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
+</ul>
+<hr>
+<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
+<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
+<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
+<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
+<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
+<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
+<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
+<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
+<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
+以上代码直接复制粘贴到全局配置文件中</li>
+<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
+<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
+<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PHP反序列化</title>
     <url>/posts/2328281505.html</url>
     <content><![CDATA[<h1 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h1><ul>
@@ -35,6 +74,20 @@
 ]]></content>
       <tags>
         <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据结构：栈</title>
+    <url>/posts/1123954996.html</url>
+    <content><![CDATA[<h2 id="栈-Stack"><a href="#栈-Stack" class="headerlink" title="栈  Stack"></a>栈  Stack</h2><ul>
+<li>栈是限定仅在表尾进行插入或删除操作的线性表。因此，对栈来说，表尾端有其特殊含义，称为栈顶，相应的，表头端称为栈底。不含元素的空表称为空栈。</li>
+</ul>
+<h3 id="顺序栈"><a href="#顺序栈" class="headerlink" title="顺序栈"></a>顺序栈</h3><ul>
+<li>栈的顺序存储结构是利用一组地址连续的存储单元依次存放自栈底到栈顶的数据元素，同时附设指针top&#x3D;0表示空栈。但在C语言中数组的下标 从0开始，且由于栈在使用过程中所需最大空间的大小很难估计，因此，一般来说，在初始化设空栈时不应限定栈的最大容量。<br>一个较合理的做法是：先为栈分配一个基本容量，然后再应用过程中，当斩的空间不够使用时再逐段扩大。为此可设定两个常量：STACK_INIT_SIZE(存储空间初始分配变量)和STACKINCREMENT(存储空间分配增量)。<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    SElemType  *base;</span><br><span class="line">    SElemType  *top;</span><br><span class="line">    <span class="type">int</span> stacksize;</span><br><span class="line">&#125;SqStack;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -59,6 +112,27 @@
 ]]></content>
       <tags>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>XSS</title>
+    <url>/posts/3909557445.html</url>
+    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
+<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
+<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
+</ul>
+<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
+<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
+</ul>
+<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
+<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
       </tags>
   </entry>
   <entry>
@@ -119,45 +193,6 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo修改主题</title>
-    <url>/posts/38893.html</url>
-    <content><![CDATA[<ul>
-<li>默认主题千篇一律，要想有自己的东西，就要和别人不一样，所以搭建好自己的博客，当然要按照自己的喜好来布置主题啦</li>
-</ul>
-<hr>
-<h2 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h2><ul>
-<li>找到主题的下载链接,例如：<a href="https://github.com/Fechin/hexo-theme-diaspora.git">https://github.com/Fechin/hexo-theme-diaspora.git</a> themes&#x2F;diaspora，然后在gitbash中输入<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://github.com/Fechin/hexo-theme-diaspora.git themes/diaspora</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="启用主题"><a href="#启用主题" class="headerlink" title="启用主题"></a>启用主题</h2><ul>
-<li>修改Hexo配置文件_config.yml主题设置为diaspora<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">theme:diaspora//注意，在这里的主题名要与themes文件夹中的主题文件名一致</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="更新主题"><a href="#更新主题" class="headerlink" title="更新主题"></a>更新主题</h2><ul>
-<li>注意：在更新主题时备份_config.yml配置文件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> themes/diaspora</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建一个分类页面"><a href="#创建一个分类页面" class="headerlink" title="创建一个分类页面"></a>创建一个分类页面</h2><ul>
-<li>新建一个页面，命名为categories。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为categories<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;categories&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建标签页"><a href="#创建标签页" class="headerlink" title="创建标签页"></a>创建标签页</h2><ul>
-<li>新建一个页面，命名为tags。命令如下：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面设置为tags<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;tags&quot;</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="创建搜索页"><a href="#创建搜索页" class="headerlink" title="创建搜索页"></a>创建搜索页</h2><ul>
-<li>需要安装hexo的搜索插件<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></li>
-<li>安装完成后输入以下命令查看安装情况<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">ls</span> --depth 0//一般不需要，因为正常情况不会出现安装失败</span><br></pre></td></tr></table></figure></li>
-<li>配置hexo全局配置文件（请将生成的索引文件放在网站根目录或修改主题js文件的path值）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">search:</span><br><span class="line">  path: search.xml</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  <span class="built_in">limit</span>: 10000</span><br></pre></td></tr></table></figure>
-以上代码直接复制粘贴到全局配置文件中</li>
-<li>新建一个页面，命名为search。<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page search</span><br></pre></td></tr></table></figure></li>
-<li>编辑刚新建的页面，将页面的类型设置为search<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">type</span>: <span class="string">&quot;search&quot;</span></span><br></pre></td></tr></table></figure></li>
-<li>在主题配置文件启用本地搜索（此配置文件在themes文件夹下）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#本地搜索,请将索引文件放在网站根目录</span></span><br><span class="line">local_search:</span><br><span class="line">    <span class="comment">#是否启用</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li>最后部署到GitHub<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo clean//清除缓存</span><br><span class="line">hexo g//生成静态文件</span><br><span class="line">hexo s//启动服务器</span><br><span class="line">hexo d//部署，用于将网站部署到服务器上</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>密码爆破</title>
     <url>/posts/29527.html</url>
     <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
@@ -200,59 +235,6 @@
 ]]></content>
       <tags>
         <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XSS</title>
-    <url>/posts/3909557445.html</url>
-    <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
-<li>XSS全称叫做跨站脚本（Cross-Site Scripting）攻击，是一种代码注入攻击，往网页中插入恶意的JS脚本<br>比如：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alert(document.cookie)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="XSS分类"><a href="#XSS分类" class="headerlink" title="XSS分类"></a>XSS分类</h2><h3 id="反射性XSS（非持久型）"><a href="#反射性XSS（非持久型）" class="headerlink" title="反射性XSS（非持久型）"></a>反射性XSS（非持久型）</h3><ul>
-<li>反射性跨站脚本也称非持久型，参数行跨站脚本。反射性XSS只是简单地把用户输入的数据“反射”给浏览器。也就是说黑客往往需要诱使用户“点击”一个恶意软件，才能攻击成功。<br>假设一个页面把用户输入的参数直接输出到页面上：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$input = $_GET[&#x27;param&#x27;];</span><br><span class="line">echo &quot;&lt;h1&gt;&quot;.$input.&quot;&lt;/h1&gt;;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-用户向param提交的数据会在<h1>的标签中展示出来<br><img src="/posts/3909557445/1.png"></h1></li>
-</ul>
-<h3 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h3><ul>
-<li>存储型XSS和反射型XSS的差别仅在于：提交的XSS代码会存储在服务端（不管是数据库、内存、还是文件系统等），下次请求目标页面时，不用再提交XSS代码。<br>最典型的例子是留言板XSS<br>存储型XSS的攻击是最隐蔽的也是为还比较大的，普通用户看到的代码是正常的，担当用户查看留言版的时候，那些流言会从数据库中查询出来并显示，浏览器发现有XSS代码，就当作正常的HTML与JS解析执行，于是就出发了XSS攻击。</li>
-</ul>
-<h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
-<li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据结构：链表</title>
-    <url>/posts/1242348577.html</url>
-    <content><![CDATA[<h2 id="线性链表"><a href="#线性链表" class="headerlink" title="线性链表"></a>线性链表</h2><blockquote>
-<p>线性表的链式存储结构的特点时用一组任意的存储单元存储线性表的数据元素（这组存储单元可以是连续的，也可以是不连续的）<br>为了表示每个数据元素a1与其直接后继数据元素之间的逻辑关系，因此除了存储其本身的的信息之外，还需存储一个指示其直接后继的信息（即直接后继的存储位置）<br>这两部分信息组成数据元素a1的存储映像，称为结点。<br>结点：包含数据域和指针域。<br><img src="/posts/1242348577/1.png" alt="线性链表"><br><img src="/posts/1242348577/2.png" alt="线性链表"></p>
-</blockquote>
-<h3 id="线性链表的单链表存储结构"><a href="#线性链表的单链表存储结构" class="headerlink" title="线性链表的单链表存储结构"></a>线性链表的单链表存储结构</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;LNode,*Linklist;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>有时我们在链表的第一个结点之前附设一个结点，称之为头结点，头结点的数据域可以不存储任何信息，也可以存储线性表的长度等附加信息。<br>头结点的指针域指向第一个结点的指针，若线性表为空表，则头结点的指针域为“空”。</li>
-</ul>
-<h3 id="链表的插入"><a href="#链表的插入" class="headerlink" title="链表的插入"></a>链表的插入</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Status <span class="title function_">ListInsert_L</span><span class="params">(LinkList &amp;L,<span class="type">int</span> j,ElemType e)</span>&#123;</span><br><span class="line">    <span class="comment">//在带头结点的单链线性表L中第i个位置之前插入元素e</span></span><br><span class="line">    p=L;j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(p&amp;&amp;j&lt;i<span class="number">-1</span>)&#123;p=p-&gt;next;++j;&#125;           <span class="comment">//寻找第i-1个结点</span></span><br><span class="line">    <span class="keyword">if</span>(!p||j&gt;i<span class="number">-1</span>)<span class="keyword">return</span> ERROR;                <span class="comment">//i小于1或大于表长+1</span></span><br><span class="line">    s=(LinkList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));        <span class="comment">//生成新结点</span></span><br><span class="line">    s-&gt;date=e;s-&gt;next=p-&gt;next;                <span class="comment">//插入L中</span></span><br><span class="line">    p-&gt;next=s;</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;<span class="comment">//ListInsert_L</span></span><br></pre></td></tr></table></figure>
-<h3 id="链表的删除"><a href="#链表的删除" class="headerlink" title="链表的删除"></a>链表的删除</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Status <span class="title function_">ListDelete_L</span><span class="params">(LinkList &amp;L,<span class="type">int</span> i,ElemType e)</span>&#123;</span><br><span class="line">    <span class="comment">//在带头结点的单链线性表L中，删除第i个元素，并由e返回其值</span></span><br><span class="line">    p=L;j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(p-&gt;next&amp;&amp;j&lt;i<span class="number">-1</span>)&#123;<span class="comment">//寻找第i个结点，并令p指向其前驱</span></span><br><span class="line">        p=p-&gt;next;++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!(p-&gt;next)||j&gt;i<span class="number">-1</span>)<span class="keyword">return</span> ERROR;  <span class="comment">//删除位置不合理</span></span><br><span class="line">    q=p-&gt;next;p-&gt;next=q-&gt;next;          <span class="comment">//删除并释放结点</span></span><br><span class="line">    e=q-&gt;date;<span class="built_in">free</span>(q);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;<span class="comment">//ListDelete_L</span></span><br></pre></td></tr></table></figure>
-<h3 id="静态单链表存储结构"><a href="#静态单链表存储结构" class="headerlink" title="静态单链表存储结构"></a>静态单链表存储结构</h3><ul>
-<li>这种存储结构仍需要预先分配一个指针，故仍具有很大的空间，但在做线性表的插入和删除时不需移动元素，仅需修改指针，故仍具有线式存储结构的主要优点。<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MAXSIZE 1000     <span class="comment">//链表的最大长度</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="type">int</span>  cur;</span><br><span class="line">&#125;component,SLinkList[MAXSIZE];</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="循环链表"><a href="#循环链表" class="headerlink" title="循环链表"></a>循环链表</h3><ul>
-<li>循环链表是另一种形式的链式存储结构，它的特点是表中最后一个结点的指针域指向头结点，整个链表形成一个环。由此，从表中任意节点出发均可找到表中其他结点。<br>循环链表的操作和线性链表基本一致。区别在于算法中的循环条件不是p或p——&gt;next是否为空，而是他们是否等于头指针。<br>有些时候循环链表设立尾指针而不设头指针，可是某些操作简化。</li>
-</ul>
-<h3 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h3><ul>
-<li>在双向链表的结点中有两个指针域，其一指向直接后继，其一指向直接前驱。</li>
-</ul>
-<pre><code class="C">typedef struct DuLNode&#123;
-    ElemType      data;
-    struct DuLNode   *prior;
-    struct DuLNode    *next;
-&#125;DuLNode, *DuLinlkList;
-</code></pre>
-]]></content>
-      <tags>
-        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -398,6 +380,38 @@
 ]]></content>
       <tags>
         <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据结构：链表</title>
+    <url>/posts/1242348577.html</url>
+    <content><![CDATA[<h2 id="线性链表"><a href="#线性链表" class="headerlink" title="线性链表"></a>线性链表</h2><blockquote>
+<p>线性表的链式存储结构的特点时用一组任意的存储单元存储线性表的数据元素（这组存储单元可以是连续的，也可以是不连续的）<br>为了表示每个数据元素a1与其直接后继数据元素之间的逻辑关系，因此除了存储其本身的的信息之外，还需存储一个指示其直接后继的信息（即直接后继的存储位置）<br>这两部分信息组成数据元素a1的存储映像，称为结点。<br>结点：包含数据域和指针域。<br><img src="/posts/1242348577/1.png" alt="线性链表"><br><img src="/posts/1242348577/2.png" alt="线性链表"></p>
+</blockquote>
+<h3 id="线性链表的单链表存储结构"><a href="#线性链表的单链表存储结构" class="headerlink" title="线性链表的单链表存储结构"></a>线性链表的单链表存储结构</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;LNode,*Linklist;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>有时我们在链表的第一个结点之前附设一个结点，称之为头结点，头结点的数据域可以不存储任何信息，也可以存储线性表的长度等附加信息。<br>头结点的指针域指向第一个结点的指针，若线性表为空表，则头结点的指针域为“空”。</li>
+</ul>
+<h3 id="链表的插入"><a href="#链表的插入" class="headerlink" title="链表的插入"></a>链表的插入</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Status <span class="title function_">ListInsert_L</span><span class="params">(LinkList &amp;L,<span class="type">int</span> j,ElemType e)</span>&#123;</span><br><span class="line">    <span class="comment">//在带头结点的单链线性表L中第i个位置之前插入元素e</span></span><br><span class="line">    p=L;j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(p&amp;&amp;j&lt;i<span class="number">-1</span>)&#123;p=p-&gt;next;++j;&#125;           <span class="comment">//寻找第i-1个结点</span></span><br><span class="line">    <span class="keyword">if</span>(!p||j&gt;i<span class="number">-1</span>)<span class="keyword">return</span> ERROR;                <span class="comment">//i小于1或大于表长+1</span></span><br><span class="line">    s=(LinkList)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LNode));        <span class="comment">//生成新结点</span></span><br><span class="line">    s-&gt;date=e;s-&gt;next=p-&gt;next;                <span class="comment">//插入L中</span></span><br><span class="line">    p-&gt;next=s;</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;<span class="comment">//ListInsert_L</span></span><br></pre></td></tr></table></figure>
+<h3 id="链表的删除"><a href="#链表的删除" class="headerlink" title="链表的删除"></a>链表的删除</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line">Status <span class="title function_">ListDelete_L</span><span class="params">(LinkList &amp;L,<span class="type">int</span> i,ElemType e)</span>&#123;</span><br><span class="line">    <span class="comment">//在带头结点的单链线性表L中，删除第i个元素，并由e返回其值</span></span><br><span class="line">    p=L;j=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(p-&gt;next&amp;&amp;j&lt;i<span class="number">-1</span>)&#123;<span class="comment">//寻找第i个结点，并令p指向其前驱</span></span><br><span class="line">        p=p-&gt;next;++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!(p-&gt;next)||j&gt;i<span class="number">-1</span>)<span class="keyword">return</span> ERROR;  <span class="comment">//删除位置不合理</span></span><br><span class="line">    q=p-&gt;next;p-&gt;next=q-&gt;next;          <span class="comment">//删除并释放结点</span></span><br><span class="line">    e=q-&gt;date;<span class="built_in">free</span>(q);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;<span class="comment">//ListDelete_L</span></span><br></pre></td></tr></table></figure>
+<h3 id="静态单链表存储结构"><a href="#静态单链表存储结构" class="headerlink" title="静态单链表存储结构"></a>静态单链表存储结构</h3><ul>
+<li>这种存储结构仍需要预先分配一个指针，故仍具有很大的空间，但在做线性表的插入和删除时不需移动元素，仅需修改指针，故仍具有线式存储结构的主要优点。<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MAXSIZE 1000     <span class="comment">//链表的最大长度</span></span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="type">int</span>  cur;</span><br><span class="line">&#125;component,SLinkList[MAXSIZE];</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="循环链表"><a href="#循环链表" class="headerlink" title="循环链表"></a>循环链表</h3><ul>
+<li>循环链表是另一种形式的链式存储结构，它的特点是表中最后一个结点的指针域指向头结点，整个链表形成一个环。由此，从表中任意节点出发均可找到表中其他结点。<br>循环链表的操作和线性链表基本一致。区别在于算法中的循环条件不是p或p——&gt;next是否为空，而是他们是否等于头指针。<br>有些时候循环链表设立尾指针而不设头指针，可是某些操作简化。</li>
+</ul>
+<h3 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h3><ul>
+<li>在双向链表的结点中有两个指针域，其一指向直接后继，其一指向直接前驱。</li>
+</ul>
+<pre><code class="C">typedef struct DuLNode&#123;
+    ElemType      data;
+    struct DuLNode   *prior;
+    struct DuLNode    *next;
+&#125;DuLNode, *DuLinlkList;
+</code></pre>
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
       </tags>
   </entry>
 </search>
