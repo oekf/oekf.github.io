@@ -536,4 +536,14 @@
         <tag>数据结构</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Java学习笔记1</title>
+    <url>/posts/3239443714.html</url>
+    <content><![CDATA[<h2 id="foreach用法"><a href="#foreach用法" class="headerlink" title="foreach用法"></a>foreach用法</h2><ul>
+<li>foreach 循环语句是 Java 1.5 的新特征之一，在遍历数组、集合方面，foreach 为开发者提供了极大的方便。foreach 循环语句是 for 语句的特殊简化版本，主要用于执行遍历功能的循环。</li>
+<li>用法：<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for(数据类型 变量名：集合)&#123;</span><br><span class="line">    语句块;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>示例：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Array</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">int</span>[] b=<span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">4</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;b.length;i++)&#123;</span><br><span class="line">            b[i]=i+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> b1:b)&#123;</span><br><span class="line">            System.out.print(b1+<span class="string">&quot; &quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+  </entry>
 </search>
